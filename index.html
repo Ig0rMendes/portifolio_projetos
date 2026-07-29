@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SEU NOME — Analista de Dados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Favicon com iniciais "IM" — troque as letras dentro do <text> pelas suas iniciais reais -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2310203D'/%3E%3Ctext x='32' y='41' font-family='Arial, sans-serif' font-weight='700' font-size='24' fill='white' text-anchor='middle'%3EIM%3C/text%3E%3Ccircle cx='49' cy='15' r='5' fill='%230E9C90'/%3E%3C/svg%3E">
+<style>
+
+  /* ============ TOKENS ============
+     Paleta "dashboard": fundo claro e frio, tinta azul-marinho profunda,
+     accent teal (dados/análise) + accent âmbar (impacto/resultado).
+     Tipografia: Space Grotesk (títulos), Inter (corpo), JetBrains Mono (rótulos/números).
+  */
+  :root{
+    --bg: #F4F7FA;
+    --surface: #FFFFFF;
+    --ink: #10203D;
+    --ink-soft: #4C5B76;
+    --ink-faint: #8895AB;
+    --line: #E1E7EF;
+    --accent: #0E9C90;
+    --accent-dark: #0A7A70;
+    --accent-2: #E5811E;
+    --accent-2-soft: #FDECD9;
+    --accent-soft: #E1F4F1;
+    --radius: 14px;
+    --maxw: 1120px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Space Grotesk', sans-serif;
+    color:var(--ink);
+    line-height:1.15;
+    margin:0;
+  }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  a{ color:inherit; text-decoration:none; }
+  ul{ margin:0; padding:0; list-style:none; }
+  section{ padding: 96px 0; }
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--accent-dark);
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:2px;
+    background:var(--accent);
+    display:inline-block;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:13px 22px;
+    border-radius:10px;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{ background:var(--ink); color:#fff; }
+  .btn-primary:hover{ box-shadow:0 10px 24px -8px rgba(16,32,61,.45); }
+  .btn-ghost{ background:transparent; color:var(--ink); border-color:var(--line); }
+  .btn-ghost:hover{ border-color:var(--ink); }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(244,247,250,.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  header.nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:18px; padding-bottom:18px;
+  }
+  .logo{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; }
+  .logo span{ color:var(--accent); }
+  nav.links{ display:flex; gap:32px; }
+  nav.links a{
+    font-size:14px; font-weight:600; color:var(--ink-soft);
+    transition:color .15s ease;
+  }
+  nav.links a:hover{ color:var(--ink); }
+  .nav-cta{ display:flex; align-items:center; gap:16px; }
+
+  /* ---------- HERO ---------- */
+  #hero{ padding-top:76px; padding-bottom:72px; }
+  #hero .wrap{
+    display:grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap:56px;
+    align-items:center;
+  }
+  #hero h1{
+    font-size:44px;
+    letter-spacing:-.01em;
+    margin-bottom:20px;
+  }
+  #hero h1 em{
+    font-style:normal;
+    color:var(--accent-dark);
+    background:linear-gradient(180deg, transparent 62%, var(--accent-soft) 62%);
+  }
+  #hero p.lead{
+    font-size:17px;
+    color:var(--ink-soft);
+    max-width:520px;
+    margin-bottom:32px;
+  }
+  .hero-actions{ display:flex; gap:14px; margin-bottom:44px; flex-wrap:wrap; }
+  .hero-stats{
+    display:flex;
+    gap:0;
+    border-top:1px solid var(--line);
+    padding-top:22px;
+  }
+  .hero-stats div{
+    flex:1;
+    padding-right:22px;
+  }
+  .hero-stats .num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:22px; font-weight:600; color:var(--ink);
+    display:block;
+  }
+  .hero-stats .label{ font-size:13px; color:var(--ink-faint); }
+
+  /* mini dashboard mockup (elemento assinatura) */
+  .dash-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+    box-shadow:0 24px 60px -30px rgba(16,32,61,.25);
+  }
+  .dash-card .dash-head{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:18px;
+  }
+  .dash-head .dots{ display:flex; gap:6px; }
+  .dash-head .dots span{ width:8px; height:8px; border-radius:50%; background:var(--line); display:inline-block; }
+  .dash-head .tag{
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent-dark);
+    background:var(--accent-soft); padding:4px 8px; border-radius:6px;
+  }
+  .bars{ display:flex; align-items:flex-end; gap:8px; height:110px; margin-bottom:16px; }
+  .bars i{
+    flex:1; border-radius:5px 5px 0 0;
+    background:linear-gradient(180deg, var(--accent) 0%, var(--accent-dark) 100%);
+    opacity:.85;
+  }
+  .bars i:nth-child(3){ background:linear-gradient(180deg, var(--accent-2) 0%, #C96A0F 100%); opacity:1; }
+  .dash-foot{ display:flex; justify-content:space-between; font-size:12px; color:var(--ink-faint); }
+  .dash-foot b{ color:var(--ink); font-family:'JetBrains Mono',monospace; }
+
+  /* ---------- SOBRE ---------- */
+  #sobre .wrap{
+    display:grid;
+    grid-template-columns: .8fr 1.2fr;
+    gap:56px;
+  }
+  #sobre h2{ font-size:30px; margin-bottom:6px; }
+  #sobre p{ color:var(--ink-soft); font-size:16px; }
+  .sobre-points{ display:grid; gap:16px; margin-top:20px; }
+  .sobre-points li{
+    display:flex; gap:12px; align-items:flex-start;
+    font-size:15px; color:var(--ink);
+  }
+  .sobre-points li::before{
+    content:"→"; color:var(--accent-dark); font-weight:700; flex-shrink:0;
+  }
+
+  /* ---------- SKILLS / COMPETÊNCIAS ---------- */
+  #skills{ background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  #skills .head{ max-width:640px; margin-bottom:44px; }
+  #skills h2{ font-size:30px; margin-bottom:10px; }
+  #skills .head p{ color:var(--ink-soft); font-size:16px; }
+  .skill-groups{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:28px;
+  }
+  .skill-group h3{
+    font-size:14px;
+    font-family:'JetBrains Mono', monospace;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    color:var(--ink-faint);
+    margin-bottom:14px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--line);
+  }
+  .chip-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    font-size:13.5px;
+    font-weight:500;
+    padding:7px 12px;
+    border-radius:8px;
+    background:var(--bg);
+    border:1px solid var(--line);
+    color:var(--ink);
+  }
+  .chip.core{
+    background:var(--accent-soft);
+    border-color:transparent;
+    color:var(--accent-dark);
+    font-weight:600;
+  }
+
+  /* ---------- PROJETOS ---------- */
+  #projetos .head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:44px; flex-wrap:wrap; gap:16px; }
+  #projetos h2{ font-size:30px; }
+  #projetos .head p{ color:var(--ink-soft); max-width:480px; }
+  .note-example{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--accent-2);
+    background:var(--accent-2-soft);
+    padding:6px 10px;
+    border-radius:6px;
+    display:inline-block;
+    margin-bottom:36px;
+  }
+  .case-grid{ display:grid; gap:24px; }
+  .case{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:32px;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap:28px;
+    position:relative;
+    overflow:hidden;
+  }
+  .case::before{
+    content:"";
+    position:absolute; left:0; top:0; bottom:0; width:4px;
+    background:var(--accent);
+  }
+  .case.alt::before{ background:var(--accent-2); }
+  .case-title-col{ grid-column: 1 / -1; display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; }
+  .case-title-col h3{ font-size:20px; }
+  .case-tools{ display:flex; gap:6px; flex-wrap:wrap; }
+  .case-tools span{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    background:var(--bg);
+    border:1px solid var(--line);
+    padding:4px 8px;
+    border-radius:6px;
+    color:var(--ink-soft);
+  }
+  .case-block .label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--ink-faint);
+    margin-bottom:8px;
+    display:block;
+  }
+  .case-block p{ font-size:14.5px; color:var(--ink); margin:0; }
+  .case-result{
+    display:flex; flex-direction:column; justify-content:center;
+    padding-left:24px; border-left:1px solid var(--line);
+    min-width:140px;
+  }
+  .case-result .big{
+    font-family:'JetBrains Mono',monospace;
+    font-size:28px; font-weight:600; color:var(--accent-2);
+    line-height:1;
+  }
+  .case.alt .case-result .big{ color:var(--accent-dark); }
+  .case-result .small{ font-size:12.5px; color:var(--ink-faint); margin-top:6px; }
+
+  /* ---------- CONTATO ---------- */
+  #contato{
+    background:var(--ink);
+    color:#fff;
+    border-radius:24px;
+    margin:0 32px 64px;
+    padding:72px 56px;
+  }
+  #contato .wrap{ padding:0; max-width:none; display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:center; }
+  #contato h2{ color:#fff; font-size:32px; margin-bottom:14px; }
+  #contato p{ color:#B9C3D6; font-size:16px; max-width:460px; }
+  .contact-list{ display:grid; gap:14px; }
+  .contact-list a, .contact-list li{
+    display:flex; align-items:center; gap:12px;
+    font-size:15px; color:#fff; font-weight:500;
+    padding:14px 18px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:10px;
+  }
+  .contact-list .k{
+    font-family:'JetBrains Mono',monospace; font-size:11px;
+    color:var(--accent); text-transform:uppercase; letter-spacing:.05em;
+    width:64px; flex-shrink:0;
+  }
+
+  footer.site-footer{
+    text-align:center;
+    padding:36px 0 48px;
+    font-size:13px;
+    color:var(--ink-faint);
+  }
+
+  /* ---------- IMAGENS GENÉRICAS (trocar pelas suas) ---------- */
+  .hero-avatar{ display:flex; align-items:center; gap:14px; margin-bottom:24px; }
+  .hero-avatar img{
+    width:56px; height:56px; border-radius:50%; object-fit:cover;
+    box-shadow:0 0 0 3px var(--surface), 0 0 0 5px var(--accent-soft);
+  }
+  .hero-avatar .who b{
+    display:block; font-family:'Space Grotesk',sans-serif; font-size:15px; color:var(--ink);
+  }
+  .hero-avatar .who span{ font-size:12.5px; color:var(--ink-faint); }
+
+  .sobre-img{
+    border-radius:var(--radius);
+    overflow:hidden;
+    border:1px solid var(--line);
+    margin-bottom:24px;
+  }
+  .sobre-img img{ width:100%; display:block; }
+
+  .case-image{
+    grid-column: 1 / -1;
+    border-radius:10px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    position:relative;
+    margin-bottom:8px;
+  }
+  .case-image img{
+    display:block; width:100%; height:190px; object-fit:cover;
+    transition:transform .4s ease;
+  }
+  .case-image .swap-note{
+    position:absolute; top:10px; right:10px;
+    background:rgba(16,32,61,.88); color:#fff;
+    font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.02em;
+    padding:5px 9px; border-radius:6px;
+  }
+
+  /* ---------- HOVERS ---------- */
+  .case{ transition: transform .25s ease, box-shadow .25s ease; }
+  .case:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 30px 60px -28px rgba(16,32,61,.28);
+  }
+  .case:hover .case-image img{ transform: scale(1.05); }
+
+  .skill-group .chip{ transition: transform .15s ease, border-color .15s ease, background .15s ease; }
+  .chip:hover{ border-color: var(--accent); transform: translateY(-2px); }
+  .chip.core:hover{ background: var(--accent); color:#fff; }
+
+  .dash-card{ transition: transform .3s ease, box-shadow .3s ease; }
+  .dash-card:hover{ transform: translateY(-4px); box-shadow:0 30px 70px -30px rgba(16,32,61,.32); }
+
+  .contact-list a{ transition: background .15s ease, transform .15s ease; }
+  .contact-list a:hover{ background:rgba(255,255,255,.12); transform:translateX(4px); }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px){
+    #hero .wrap{ grid-template-columns:1fr; }
+    #sobre .wrap{ grid-template-columns:1fr; }
+    .skill-groups{ grid-template-columns:1fr 1fr; }
+    .case{ grid-template-columns:1fr; }
+    .case-result{ border-left:none; border-top:1px solid var(--line); padding-left:0; padding-top:16px; flex-direction:row; align-items:center; gap:14px; }
+    #contato .wrap{ grid-template-columns:1fr; }
+    nav.links{ display:none; }
+  }
+  @media (max-width: 560px){
+    section{ padding:64px 0; }
+    #hero h1{ font-size:32px; }
+    .hero-stats{ flex-wrap:wrap; gap:18px; }
+    .hero-stats div{ flex:0 0 45%; padding-right:0; }
+    .skill-groups{ grid-template-columns:1fr; }
+    #contato{ margin:0 16px 48px; padding:48px 24px; }
+    .wrap{ padding:0 20px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav">
+    <div class="wrap">
+      <a href="#hero" class="logo">SEU NOME<span>.</span></a>
+      <nav class="links">
+        <a href="#sobre">Sobre</a>
+        <a href="#skills">Competências</a>
+        <a href="#projetos">Projetos</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="#contato" class="btn btn-primary">Falar comigo</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="hero">
+    <div class="wrap">
+      <div>
+        <!-- Foto genérica — troque o src abaixo pela sua foto real (quadrada, boa iluminação, fundo neutro) -->
+        <div class="hero-avatar">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23E1F4F1'/%3E%3Ccircle cx='100' cy='80' r='38' fill='%230E9C90' opacity='0.55'/%3E%3Cpath d='M28 195c0-48 32-80 72-80s72 32 72 80' fill='%230E9C90' opacity='0.55'/%3E%3C/svg%3E" alt="Foto de perfil (placeholder — substitua pela sua foto)">
+          <div class="who"><b>Seu Nome</b><span>Analista de Dados</span></div>
+        </div>
+        <div class="eyebrow">Analista de Dados</div>
+        <h1>Transformo dados brutos em <em>decisões de negócio</em>.</h1>
+        <p class="lead">
+          [Uma frase curta e específica sobre o que você faz: ex. "Atuo com análise exploratória, modelagem
+          preditiva e dashboards para times comerciais e de operações tomarem decisões mais rápidas."]
+        </p>
+        <div class="hero-actions">
+          <a href="#projetos" class="btn btn-primary">Ver projetos</a>
+          <a href="#" class="btn btn-ghost">Baixar currículo (PDF)</a>
+        </div>
+        <div class="hero-stats">
+          <div><span class="num">[X]</span><span class="label">Projetos de análise</span></div>
+          <div><span class="num">[Y]</span><span class="label">Ferramentas dominadas</span></div>
+          <div><span class="num">[Área]</span><span class="label">Foco de atuação</span></div>
+        </div>
+      </div>
+
+      <div class="dash-card">
+        <div class="dash-head">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <div class="tag">painel_analitico.csv</div>
+        </div>
+        <div class="bars">
+          <i style="height:38%"></i>
+          <i style="height:62%"></i>
+          <i style="height:88%"></i>
+          <i style="height:54%"></i>
+          <i style="height:71%"></i>
+          <i style="height:45%"></i>
+        </div>
+        <div class="dash-foot">
+          <span>Métrica acompanhada <b>&uarr; 24%</b></span>
+          <span>Atualizado <b>hoje</b></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SOBRE ===================== -->
+  <section id="sobre">
+    <div class="wrap">
+      <div>
+        <!-- Imagem genérica de dados — troque pela sua foto, print de um projeto, ou remova -->
+        <div class="sobre-img">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Crect width='400' height='260' fill='%23F4F7FA'/%3E%3Cline x1='40' y1='30' x2='40' y2='220' stroke='%23E1E7EF' stroke-width='2'/%3E%3Cline x1='40' y1='220' x2='370' y2='220' stroke='%23E1E7EF' stroke-width='2'/%3E%3Crect x='60' y='140' width='30' height='80' fill='%230E9C90' opacity='0.85'/%3E%3Crect x='110' y='100' width='30' height='120' fill='%230E9C90' opacity='0.6'/%3E%3Crect x='160' y='160' width='30' height='60' fill='%230E9C90' opacity='0.85'/%3E%3Crect x='210' y='70' width='30' height='150' fill='%23E5811E' opacity='0.85'/%3E%3Crect x='260' y='120' width='30' height='100' fill='%230E9C90' opacity='0.6'/%3E%3Cpolyline points='60,120 110,90 160,130 210,50 260,95 310,60' fill='none' stroke='%2310203D' stroke-width='2.5'/%3E%3Ccircle cx='310' cy='60' r='4' fill='%2310203D'/%3E%3C/svg%3E" alt="Ilustração genérica de análise de dados (placeholder)">
+        </div>
+        <div class="eyebrow">Sobre mim</div>
+        <h2>Quem entrega a análise por trás do gráfico.</h2>
+      </div>
+      <div>
+        <p>
+          [Escreva 2–3 frases objetivas sobre sua trajetória: formação, tempo de experiência (mesmo que seja
+          com projetos pessoais/estudos), e o tipo de problema que você gosta de resolver. Evite frases genéricas
+          como "apaixonado por dados" — prefira algo concreto, como o setor ou tipo de análise que você domina.]
+        </p>
+        <ul class="sobre-points">
+          <li>[Ponto forte 1 — ex: "Experiência prática transformando planilhas dispersas em dashboards de acompanhamento."]</li>
+          <li>[Ponto forte 2 — ex: "Domínio de SQL para consultas complexas em bases relacionais."]</li>
+          <li>[Ponto forte 3 — ex: "Facilidade em traduzir resultados técnicos para stakeholders não técnicos."]</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== COMPETÊNCIAS (ex "Erat lacinia") ===================== -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="head">
+        <div class="eyebrow">Competências</div>
+        <h2>O que um analista de dados precisa entregar.</h2>
+        <p>Lista ampla para você filtrar o que é realmente seu ponto forte — chips destacados marcam sugestões de competências mais valorizadas por recrutadores.</p>
+      </div>
+
+      <div class="skill-groups">
+        <div class="skill-group">
+          <h3>Linguagens & Ferramentas</h3>
+          <div class="chip-row">
+            <span class="chip core">SQL</span>
+            <span class="chip core">Python</span>
+            <span class="chip">R</span>
+            <span class="chip">Excel avançado</span>
+            <span class="chip">Google Sheets</span>
+            <span class="chip">VBA</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Análise & Estatística</h3>
+          <div class="chip-row">
+            <span class="chip core">Análise exploratória (EDA)</span>
+            <span class="chip">Estatística descritiva</span>
+            <span class="chip">Testes de hipótese</span>
+            <span class="chip">A/B Testing</span>
+            <span class="chip">Séries temporais</span>
+            <span class="chip">Modelagem preditiva</span>
+            <span class="chip">Machine Learning (básico)</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Visualização & BI</h3>
+          <div class="chip-row">
+            <span class="chip core">Power BI</span>
+            <span class="chip core">Tableau</span>
+            <span class="chip">Looker Studio</span>
+            <span class="chip">Storytelling com dados</span>
+            <span class="chip">Design de dashboards</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Dados & Engenharia</h3>
+          <div class="chip-row">
+            <span class="chip core">ETL / pipelines</span>
+            <span class="chip">PostgreSQL</span>
+            <span class="chip">MySQL</span>
+            <span class="chip">Git & GitHub</span>
+            <span class="chip">Cloud (AWS / GCP / Azure)</span>
+            <span class="chip">Airflow / dbt</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Negócio & Impacto</h3>
+          <div class="chip-row">
+            <span class="chip core">Definição de KPIs</span>
+            <span class="chip">Priorização orientada a dados</span>
+            <span class="chip">Análise de churn</span>
+            <span class="chip">Análise de funil</span>
+            <span class="chip">Precificação</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <h3>Comportamentais</h3>
+          <div class="chip-row">
+            <span class="chip core">Comunicação com stakeholders</span>
+            <span class="chip">Pensamento crítico</span>
+            <span class="chip">Autonomia</span>
+            <span class="chip">Curiosidade investigativa</span>
+            <span class="chip">Trabalho em equipe</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROJETOS ===================== -->
+  <section id="projetos">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <div class="eyebrow">Projetos</div>
+          <h2>Mini-cases: problema, solução e resultado.</h2>
+        </div>
+        <p>Cada card resume um projeto real em segundos — o essencial para quem está avaliando um currículo.</p>
+      </div>
+
+      <span class="note-example">⚠ Projetos abaixo são EXEMPLOS — substitua pelos seus, mantendo a mesma estrutura</span>
+
+      <div class="case-grid">
+
+        <!-- CASE 1 -->
+        <article class="case">
+          <!-- Screenshot placeholder — troque o src pela imagem real do seu dashboard/notebook -->
+          <div class="case-image">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 190'%3E%3Crect width='600' height='190' fill='%23FFFFFF'/%3E%3Crect x='0' y='0' width='600' height='28' fill='%23F4F7FA'/%3E%3Ccircle cx='16' cy='14' r='4' fill='%23E1E7EF'/%3E%3Ccircle cx='30' cy='14' r='4' fill='%23E1E7EF'/%3E%3Ccircle cx='44' cy='14' r='4' fill='%23E1E7EF'/%3E%3Crect x='24' y='50' width='120' height='120' rx='6' fill='%23E1F4F1'/%3E%3Cpath d='M40 150 L60 110 L80 130 L100 80 L120 100 L140 60' fill='none' stroke='%230E9C90' stroke-width='3'/%3E%3Crect x='160' y='50' width='90' height='120' rx='6' fill='%23FDECD9'/%3E%3Crect x='175' y='120' width='16' height='40' fill='%23E5811E'/%3E%3Crect x='198' y='90' width='16' height='70' fill='%23E5811E' opacity='0.7'/%3E%3Crect x='221' y='105' width='16' height='55' fill='%23E5811E' opacity='0.5'/%3E%3Crect x='270' y='50' width='306' height='55' rx='6' fill='%23F4F7FA'/%3E%3Crect x='270' y='115' width='306' height='55' rx='6' fill='%23F4F7FA'/%3E%3C/svg%3E" alt="Placeholder de dashboard — substitua pela screenshot real do projeto de churn">
+            <span class="swap-note">substituir por print real</span>
+          </div>
+          <div class="case-title-col">
+            <h3>Redução de churn em base de assinantes</h3>
+            <div class="case-tools">
+              <span>Python</span><span>SQL</span><span>Power BI</span>
+            </div>
+          </div>
+          <div class="case-block">
+            <span class="label">Problema</span>
+            <p>Empresa perdia [X]% dos assinantes por mês sem saber quais fatores antecipavam o cancelamento.</p>
+          </div>
+          <div class="case-block">
+            <span class="label">Solução</span>
+            <p>Análise exploratória + modelo de propensão ao cancelamento, com dashboard de acompanhamento por segmento de cliente.</p>
+          </div>
+          <div class="case-block">
+            <span class="label">Ferramentas</span>
+            <p>Extração via SQL, modelagem em Python (scikit-learn), visualização em Power BI.</p>
+          </div>
+          <div class="case-result">
+            <span class="big">-18%</span>
+            <span class="small">de churn em 3 meses</span>
+          </div>
+        </article>
+
+        <!-- CASE 2 -->
+        <article class="case alt">
+          <!-- Screenshot placeholder — troque o src pela imagem real do seu dashboard/planilha -->
+          <div class="case-image">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 190'%3E%3Crect width='600' height='190' fill='%23FFFFFF'/%3E%3Crect x='0' y='0' width='600' height='28' fill='%23F4F7FA'/%3E%3Ccircle cx='16' cy='14' r='4' fill='%23E1E7EF'/%3E%3Ccircle cx='30' cy='14' r='4' fill='%23E1E7EF'/%3E%3Ccircle cx='44' cy='14' r='4' fill='%23E1E7EF'/%3E%3Crect x='24' y='50' width='260' height='120' rx='6' fill='%23FDECD9'/%3E%3Crect x='44' y='140' width='24' height='20' fill='%23E5811E'/%3E%3Crect x='78' y='110' width='24' height='50' fill='%23E5811E' opacity='0.8'/%3E%3Crect x='112' y='90' width='24' height='70' fill='%23E5811E' opacity='0.6'/%3E%3Crect x='146' y='120' width='24' height='40' fill='%23E5811E' opacity='0.8'/%3E%3Crect x='180' y='70' width='24' height='90' fill='%23E5811E'/%3E%3Crect x='214' y='105' width='24' height='55' fill='%23E5811E' opacity='0.6'/%3E%3Crect x='300' y='50' width='276' height='55' rx='6' fill='%23E1F4F1'/%3E%3Crect x='300' y='115' width='276' height='55' rx='6' fill='%23F4F7FA'/%3E%3C/svg%3E" alt="Placeholder de dashboard — substitua pela screenshot real do projeto de estoque">
+            <span class="swap-note">substituir por print real</span>
+          </div>
+          <div class="case-title-col">
+            <h3>Otimização de estoque em rede de lojas</h3>
+            <div class="case-tools">
+              <span>SQL</span><span>Excel</span><span>Looker Studio</span>
+            </div>
+          </div>
+          <div class="case-block">
+            <span class="label">Problema</span>
+            <p>Ruptura de estoque em produtos de alta rotatividade gerava perda de vendas em [X] lojas.</p>
+          </div>
+          <div class="case-block">
+            <span class="label">Solução</span>
+            <p>Modelo de previsão de demanda por loja e categoria, com alertas automáticos de reposição.</p>
+          </div>
+          <div class="case-block">
+            <span class="label">Ferramentas</span>
+            <p>Consultas SQL em base transacional, tratamento em Excel, painel em Looker Studio.</p>
+          </div>
+          <div class="case-result">
+            <span class="big">+12%</span>
+            <span class="small">de disponibilidade de produto</span>
+          </div>
+        </article>
+
+        <!-- CASE 3 -->
+        <article class="case">
+          <!-- Screenshot placeholder — troque o src pela imagem real do seu dashboard -->
+          <div class="case-image">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 190'%3E%3Crect width='600' height='190' fill='%23FFFFFF'/%3E%3Crect x='0' y='0' width='600' height='28' fill='%23F4F7FA'/%3E%3Ccircle cx='16' cy='14' r='4' fill='%23E1E7EF'/%3E%3Ccircle cx='30' cy='14' r='4' fill='%23E1E7EF'/%3E%3Ccircle cx='44' cy='14' r='4' fill='%23E1E7EF'/%3E%3Crect x='24' y='50' width='130' height='55' rx='6' fill='%23E1F4F1'/%3E%3Crect x='166' y='50' width='130' height='55' rx='6' fill='%23FDECD9'/%3E%3Crect x='308' y='50' width='268' height='55' rx='6' fill='%23F4F7FA'/%3E%3Crect x='24' y='115' width='552' height='55' rx='6' fill='%23F4F7FA'/%3E%3Cpolyline points='44,155 90,140 136,150 182,120 228,135 274,105 320,125 366,95' fill='none' stroke='%230E9C90' stroke-width='2.5'/%3E%3C/svg%3E" alt="Placeholder de dashboard — substitua pela screenshot real do projeto comercial">
+            <span class="swap-note">substituir por print real</span>
+          </div>
+          <div class="case-title-col">
+            <h3>Dashboard de performance comercial</h3>
+            <div class="case-tools">
+              <span>Python</span><span>PostgreSQL</span><span>Tableau</span>
+            </div>
+          </div>
+          <div class="case-block">
+            <span class="label">Problema</span>
+            <p>Time comercial não tinha visão consolidada de metas, funil e conversão por vendedor.</p>
+          </div>
+          <div class="case-block">
+            <span class="label">Solução</span>
+            <p>Pipeline de dados automatizado + dashboard interativo com KPIs de funil, metas e ranking.</p>
+          </div>
+          <div class="case-block">
+            <span class="label">Ferramentas</span>
+            <p>ETL em Python, banco PostgreSQL, visualização em Tableau atualizada diariamente.</p>
+          </div>
+          <div class="case-result">
+            <span class="big">6h → 5min</span>
+            <span class="small">tempo de geração do relatório</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTATO ===================== -->
+  <section id="contato-wrap">
+    <div id="contato">
+      <div class="wrap">
+        <div>
+          <div class="eyebrow" style="color:var(--accent);">Contato</div>
+          <h2>Vamos conversar sobre a próxima vaga?</h2>
+          <p>Aberto a oportunidades como Analista de Dados Jr/Pleno. Respondo rápido — o próximo passo é só chamar.</p>
+        </div>
+        <div class="contact-list">
+          <a href="mailto:seuemail@email.com"><span class="k">EMAIL</span> seuemail@email.com</a>
+          <a href="#"><span class="k">LINKEDIN</span> linkedin.com/in/seunome</a>
+          <a href="#"><span class="k">GITHUB</span> github.com/seunome</a>
+          <li><span class="k">LOCAL</span> Sua cidade, UF</li>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Seu Nome. Portfólio de Analista de Dados.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
