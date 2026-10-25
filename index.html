@@ -3,429 +3,302 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SEU NOME — Analista de Dados</title>
+<title>Igor Mendes | Analista de Dados</title>
+<meta name="description" content="Igor Mendes, Analista de Dados em Montes Claros (MG). Dashboards em Power BI, SQL, Python e automações com Power Platform para indústria e controle de qualidade." />
+<meta name="author" content="Igor Mendes" />
+<meta property="og:title" content="Igor Mendes | Analista de Dados" />
+<meta property="og:description" content="Transformo dados de processo em decisões: dashboards, ETL e automações que reduzem atrasos e tempo operacional." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="images/foto_perfil.jpg" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<!-- Favicon com iniciais "IM" — troque as letras dentro do <text> pelas suas iniciais reais -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2310203D'/%3E%3Ctext x='32' y='41' font-family='Arial, sans-serif' font-weight='700' font-size='24' fill='white' text-anchor='middle'%3EIM%3C/text%3E%3Ccircle cx='49' cy='15' r='5' fill='%230E9C90'/%3E%3C/svg%3E">
 <style>
-
   /* ============ TOKENS ============
-     Paleta "dashboard": fundo claro e frio, tinta azul-marinho profunda,
-     accent teal (dados/análise) + accent âmbar (impacto/resultado).
-     Tipografia: Space Grotesk (títulos), Inter (corpo), JetBrains Mono (rótulos/números).
-  */
+     Fundo claro e frio, tinta azul-marinho, destaque teal (análise)
+     e âmbar (impacto/resultado).
+     Fontes: Space Grotesk (títulos), Inter (texto), JetBrains Mono (rótulos e números). */
   :root{
-    --bg: #F4F7FA;
-    --surface: #FFFFFF;
-    --ink: #10203D;
-    --ink-soft: #4C5B76;
-    --ink-faint: #8895AB;
-    --line: #E1E7EF;
-    --accent: #0E9C90;
-    --accent-dark: #0A7A70;
-    --accent-2: #E5811E;
-    --accent-2-soft: #FDECD9;
-    --accent-soft: #E1F4F1;
-    --radius: 14px;
-    --maxw: 1120px;
+    --bg:#F4F7FA;
+    --surface:#FFFFFF;
+    --ink:#10203D;
+    --ink-soft:#4C5B76;
+    --ink-faint:#7A879D;
+    --line:#E1E7EF;
+    --accent:#0E9C90;
+    --accent-dark:#0A7A70;
+    --accent-soft:#E1F4F1;
+    --accent-2:#D9730D;
+    --accent-2-soft:#FDECD9;
+    --radius:14px;
+    --maxw:1120px;
   }
 
-  *{ box-sizing: border-box; }
-  html{ scroll-behavior: smooth; }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; scroll-padding-top:80px; }
   body{
     margin:0;
     background:var(--bg);
     color:var(--ink);
-    font-family:'Inter', sans-serif;
+    font-family:'Inter',sans-serif;
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
   }
-  h1,h2,h3{
-    font-family:'Space Grotesk', sans-serif;
-    color:var(--ink);
-    line-height:1.15;
-    margin:0;
-  }
-  .mono{ font-family:'JetBrains Mono', monospace; }
+  h1,h2,h3{ font-family:'Space Grotesk',sans-serif; color:var(--ink); line-height:1.15; margin:0; }
+  p{ margin:0; }
   a{ color:inherit; text-decoration:none; }
   ul{ margin:0; padding:0; list-style:none; }
-  section{ padding: 96px 0; }
+  img{ max-width:100%; }
+  section{ padding:96px 0; }
   .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 32px; }
+
   .eyebrow{
-    font-family:'JetBrains Mono', monospace;
-    font-size:13px;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    color:var(--accent-dark);
-    font-weight:600;
-    display:flex;
-    align-items:center;
-    gap:10px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--accent-dark); font-weight:600;
+    display:flex; align-items:center; gap:10px;
     margin-bottom:14px;
   }
-  .eyebrow::before{
-    content:"";
-    width:22px; height:2px;
-    background:var(--accent);
-    display:inline-block;
-  }
+  .eyebrow::before{ content:""; width:22px; height:2px; background:var(--accent); display:inline-block; }
+  .section-head{ max-width:660px; margin-bottom:48px; }
+  .section-head h2{ font-size:32px; margin-bottom:12px; letter-spacing:-.01em; }
+  .section-head p{ color:var(--ink-soft); font-size:16px; }
+
   .btn{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:13px 22px;
-    border-radius:10px;
-    font-weight:600;
-    font-size:15px;
-    cursor:pointer;
-    border:1px solid transparent;
-    transition:transform .15s ease, box-shadow .15s ease;
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 22px; border-radius:10px;
+    font-weight:600; font-size:15px;
+    border:1px solid transparent; cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
   }
   .btn:hover{ transform:translateY(-2px); }
   .btn-primary{ background:var(--ink); color:#fff; }
   .btn-primary:hover{ box-shadow:0 10px 24px -8px rgba(16,32,61,.45); }
   .btn-ghost{ background:transparent; color:var(--ink); border-color:var(--line); }
   .btn-ghost:hover{ border-color:var(--ink); }
+  .btn svg{ width:16px; height:16px; }
 
   /* ---------- NAV ---------- */
   header.nav{
     position:sticky; top:0; z-index:50;
-    background:rgba(244,247,250,.86);
+    background:rgba(244,247,250,.88);
     backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);
   }
-  header.nav .wrap{
-    display:flex; align-items:center; justify-content:space-between;
-    padding-top:18px; padding-bottom:18px;
-  }
-  .logo{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; }
+  header.nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding-top:16px; padding-bottom:16px; gap:24px; }
+  .logo{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:19px; }
   .logo span{ color:var(--accent); }
-  nav.links{ display:flex; gap:32px; }
-  nav.links a{
-    font-size:14px; font-weight:600; color:var(--ink-soft);
-    transition:color .15s ease;
-  }
+  nav.links{ display:flex; gap:30px; }
+  nav.links a{ font-size:14px; font-weight:600; color:var(--ink-soft); transition:color .15s ease; }
   nav.links a:hover{ color:var(--ink); }
-  .nav-cta{ display:flex; align-items:center; gap:16px; }
+  header.nav .btn{ padding:10px 18px; font-size:14px; }
 
   /* ---------- HERO ---------- */
-  #hero{ padding-top:76px; padding-bottom:72px; }
-  #hero .wrap{
-    display:grid;
-    grid-template-columns: 1.15fr .85fr;
-    gap:56px;
-    align-items:center;
+  #hero{ padding-top:72px; padding-bottom:80px; }
+  #hero .wrap{ display:grid; grid-template-columns:1.15fr .85fr; gap:64px; align-items:center; }
+  .status{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:13px; font-weight:600; color:var(--accent-dark);
+    background:var(--accent-soft); padding:6px 12px; border-radius:999px;
+    margin-bottom:22px;
   }
-  #hero h1{
-    font-size:44px;
-    letter-spacing:-.01em;
-    margin-bottom:20px;
-  }
+  .status i{ width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px rgba(14,156,144,.18); }
+  #hero h1{ font-size:48px; letter-spacing:-.02em; margin-bottom:22px; }
   #hero h1 em{
-    font-style:normal;
-    color:var(--accent-dark);
+    font-style:normal; color:var(--accent-dark);
     background:linear-gradient(180deg, transparent 62%, var(--accent-soft) 62%);
   }
-  #hero p.lead{
-    font-size:17px;
-    color:var(--ink-soft);
-    max-width:520px;
-    margin-bottom:32px;
-  }
+  #hero p.lead{ font-size:17.5px; color:var(--ink-soft); max-width:540px; margin-bottom:32px; }
   .hero-actions{ display:flex; gap:14px; margin-bottom:44px; flex-wrap:wrap; }
-  .hero-stats{
-    display:flex;
-    gap:0;
-    border-top:1px solid var(--line);
-    padding-top:22px;
-  }
-  .hero-stats div{
-    flex:1;
-    padding-right:22px;
-  }
-  .hero-stats .num{
-    font-family:'JetBrains Mono',monospace;
-    font-size:22px; font-weight:600; color:var(--ink);
-    display:block;
-  }
-  .hero-stats .label{ font-size:13px; color:var(--ink-faint); }
+  .hero-stats{ display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line); padding-top:22px; gap:20px; }
+  .hero-stats .num{ font-family:'JetBrains Mono',monospace; font-size:26px; font-weight:600; color:var(--accent-2); display:block; line-height:1.2; }
+  .hero-stats .label{ font-size:13px; color:var(--ink-faint); line-height:1.4; display:block; margin-top:4px; }
 
-  /* mini dashboard mockup (elemento assinatura) */
-  .dash-card{
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    padding:22px;
-    box-shadow:0 24px 60px -30px rgba(16,32,61,.25);
+  .hero-photo{ position:relative; justify-self:center; width:100%; max-width:400px; }
+  .hero-photo::before{
+    content:""; position:absolute; inset:18px -18px -18px 18px;
+    border-radius:24px; background:var(--accent-soft);
+    border:1px solid #CBEAE5;
   }
-  .dash-card .dash-head{
-    display:flex; justify-content:space-between; align-items:center;
-    margin-bottom:18px;
+  .hero-photo img{
+    position:relative; display:block; width:100%; height:auto; aspect-ratio:1/1; object-fit:cover;
+    border-radius:24px; box-shadow:0 30px 60px -30px rgba(16,32,61,.4);
   }
-  .dash-head .dots{ display:flex; gap:6px; }
-  .dash-head .dots span{ width:8px; height:8px; border-radius:50%; background:var(--line); display:inline-block; }
-  .dash-head .tag{
-    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent-dark);
-    background:var(--accent-soft); padding:4px 8px; border-radius:6px;
+  .float-chip{
+    position:absolute; background:var(--surface); border:1px solid var(--line);
+    border-radius:12px; padding:12px 16px;
+    box-shadow:0 18px 40px -20px rgba(16,32,61,.35);
   }
-  .bars{ display:flex; align-items:flex-end; gap:8px; height:110px; margin-bottom:16px; }
-  .bars i{
-    flex:1; border-radius:5px 5px 0 0;
-    background:linear-gradient(180deg, var(--accent) 0%, var(--accent-dark) 100%);
-    opacity:.85;
-  }
-  .bars i:nth-child(3){ background:linear-gradient(180deg, var(--accent-2) 0%, #C96A0F 100%); opacity:1; }
-  .dash-foot{ display:flex; justify-content:space-between; font-size:12px; color:var(--ink-faint); }
-  .dash-foot b{ color:var(--ink); font-family:'JetBrains Mono',monospace; }
+  .float-chip b{ display:block; font-family:'JetBrains Mono',monospace; font-size:20px; color:var(--accent-2); line-height:1.1; }
+  .float-chip span{ font-size:12px; color:var(--ink-soft); }
+  .float-chip.one{ left:-36px; bottom:90px; }
+  .float-chip.two{ right:-30px; bottom:-22px; }
+  .float-chip.two b{ color:var(--accent-dark); font-size:14px; font-family:'Inter',sans-serif; }
 
   /* ---------- SOBRE ---------- */
-  #sobre .wrap{
-    display:grid;
-    grid-template-columns: .8fr 1.2fr;
-    gap:56px;
-  }
-  #sobre h2{ font-size:30px; margin-bottom:6px; }
-  #sobre p{ color:var(--ink-soft); font-size:16px; }
-  .sobre-points{ display:grid; gap:16px; margin-top:20px; }
-  .sobre-points li{
-    display:flex; gap:12px; align-items:flex-start;
-    font-size:15px; color:var(--ink);
-  }
-  .sobre-points li::before{
-    content:"→"; color:var(--accent-dark); font-weight:700; flex-shrink:0;
-  }
+  #sobre{ background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  #sobre .wrap{ display:grid; grid-template-columns:.85fr 1.15fr; gap:64px; }
+  #sobre h2{ font-size:32px; letter-spacing:-.01em; }
+  #sobre .text p{ color:var(--ink-soft); font-size:16px; margin-bottom:16px; }
+  #sobre .text p strong{ color:var(--ink); }
+  .facts{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:28px; }
+  .fact{ border:1px solid var(--line); border-radius:12px; padding:16px 18px; background:var(--bg); }
+  .fact .k{ font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); display:block; margin-bottom:4px; }
+  .fact .v{ font-size:14.5px; font-weight:600; color:var(--ink); line-height:1.4; }
 
-  /* ---------- SKILLS / COMPETÊNCIAS ---------- */
-  #skills{ background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
-  #skills .head{ max-width:640px; margin-bottom:44px; }
-  #skills h2{ font-size:30px; margin-bottom:10px; }
-  #skills .head p{ color:var(--ink-soft); font-size:16px; }
-  .skill-groups{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:28px;
+  /* ---------- EXPERIÊNCIA ---------- */
+  .timeline{ display:grid; gap:24px; }
+  .job{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:32px; display:grid; grid-template-columns:240px 1fr; gap:32px;
   }
+  .job-meta .period{ font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--accent-dark); font-weight:600; display:block; margin-bottom:8px; }
+  .job-meta h3{ font-size:21px; margin-bottom:6px; }
+  .job-meta .role{ font-size:14px; color:var(--ink-soft); line-height:1.45; }
+  .job-meta .stack{ display:flex; flex-wrap:wrap; gap:6px; margin-top:16px; }
+  .tag{
+    font-family:'JetBrains Mono',monospace; font-size:11.5px;
+    background:var(--bg); border:1px solid var(--line);
+    padding:4px 8px; border-radius:6px; color:var(--ink-soft);
+  }
+  .impact{ display:grid; grid-template-columns:repeat(auto-fit, minmax(190px,1fr)); gap:14px; margin-bottom:22px; }
+  .impact div{ background:var(--accent-2-soft); border-radius:10px; padding:14px 16px; }
+  .impact b{ font-family:'JetBrains Mono',monospace; font-size:24px; color:var(--accent-2); display:block; line-height:1.1; }
+  .impact span{ font-size:13px; color:var(--ink); line-height:1.4; display:block; margin-top:6px; }
+  .job ul.bullets{ display:grid; gap:10px; }
+  .job ul.bullets li{ position:relative; padding-left:26px; font-size:15px; color:var(--ink); }
+  .job ul.bullets li::before{ content:"→"; position:absolute; left:0; top:0; color:var(--accent-dark); font-weight:700; }
+
+  /* ---------- PROJETOS ---------- */
+  #projetos{ background:var(--surface); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .case{
+    background:var(--surface); border:1px solid var(--line); border-radius:18px;
+    overflow:hidden; display:grid; grid-template-columns:1fr;
+    box-shadow:0 30px 60px -40px rgba(16,32,61,.35);
+  }
+  .case-image{ display:block; background:var(--bg); border-bottom:1px solid var(--line); position:relative; overflow:hidden; }
+  .case-image img{ display:block; width:100%; height:auto; transition:transform .5s ease; }
+  .case-image:hover img{ transform:scale(1.03); }
+  .case-image .live{
+    position:absolute; left:16px; bottom:16px;
+    background:rgba(16,32,61,.9); color:#fff;
+    font-family:'JetBrains Mono',monospace; font-size:11.5px;
+    padding:6px 10px; border-radius:6px; display:flex; align-items:center; gap:8px;
+  }
+  .case-image .live i{ width:7px; height:7px; border-radius:50%; background:#3DDC97; }
+  .case-body{ padding:36px; display:grid; grid-template-columns:1.15fr .85fr; gap:40px; }
+  .case-col{ display:flex; flex-direction:column; gap:18px; }
+  .case-body h3{ font-size:24px; }
+  .case-body .sub{ font-size:15px; color:var(--ink-soft); }
+  .case-block .label{ font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); display:block; margin-bottom:6px; }
+  .case-block p{ font-size:14.5px; color:var(--ink); }
+  .case-result{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:-10px; }
+  .case-result div{ border:1px solid var(--line); border-radius:10px; padding:12px 14px; }
+  .case-result b{ font-family:'JetBrains Mono',monospace; font-size:22px; color:var(--accent-2); display:block; line-height:1.1; }
+  .case-result span{ font-size:12.5px; color:var(--ink-soft); line-height:1.35; display:block; margin-top:4px; }
+  .case-tools{ display:flex; flex-wrap:wrap; gap:6px; }
+  .case-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:auto; }
+  .case-actions .btn{ padding:11px 18px; font-size:14px; }
+
+  .coming{
+    margin-top:24px; border:1.5px dashed #C9D3E0; border-radius:14px;
+    padding:22px 26px; display:flex; align-items:center; gap:14px;
+    color:var(--ink-soft); font-size:15px;
+  }
+  .coming b{ color:var(--ink); }
+
+  /* ---------- COMPETÊNCIAS ---------- */
+  .skill-groups{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .skill-group{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:24px; }
   .skill-group h3{
-    font-size:14px;
-    font-family:'JetBrains Mono', monospace;
-    text-transform:uppercase;
-    letter-spacing:.05em;
-    color:var(--ink-faint);
-    margin-bottom:14px;
-    padding-bottom:10px;
-    border-bottom:1px solid var(--line);
+    font-size:13px; font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.05em;
+    color:var(--ink-faint); margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--line);
   }
   .chip-row{ display:flex; flex-wrap:wrap; gap:8px; }
   .chip{
-    font-size:13.5px;
-    font-weight:500;
-    padding:7px 12px;
-    border-radius:8px;
-    background:var(--bg);
-    border:1px solid var(--line);
-    color:var(--ink);
+    font-size:13.5px; font-weight:500; padding:6px 11px; border-radius:8px;
+    background:var(--bg); border:1px solid var(--line); color:var(--ink);
+    transition:transform .15s ease, border-color .15s ease;
   }
-  .chip.core{
-    background:var(--accent-soft);
-    border-color:transparent;
-    color:var(--accent-dark);
-    font-weight:600;
-  }
+  .chip:hover{ border-color:var(--accent); transform:translateY(-2px); }
+  .chip.core{ background:var(--accent-soft); border-color:transparent; color:var(--accent-dark); font-weight:600; }
 
-  /* ---------- PROJETOS ---------- */
-  #projetos .head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:44px; flex-wrap:wrap; gap:16px; }
-  #projetos h2{ font-size:30px; }
-  #projetos .head p{ color:var(--ink-soft); max-width:480px; }
-  .note-example{
-    font-family:'JetBrains Mono', monospace;
-    font-size:12px;
-    color:var(--accent-2);
-    background:var(--accent-2-soft);
-    padding:6px 10px;
-    border-radius:6px;
-    display:inline-block;
-    margin-bottom:36px;
+  /* ---------- FORMAÇÃO E CERTIFICAÇÕES ---------- */
+  #formacao .cols{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+  .cred-list{ display:grid; gap:14px; }
+  .cred{
+    background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:18px 20px; display:flex; justify-content:space-between; align-items:flex-start; gap:16px;
   }
-  .case-grid{ display:grid; gap:24px; }
-  .case{
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    padding:32px;
-    display:grid;
-    grid-template-columns: 1fr 1fr 1fr auto;
-    gap:28px;
-    position:relative;
-    overflow:hidden;
-  }
-  .case::before{
-    content:"";
-    position:absolute; left:0; top:0; bottom:0; width:4px;
-    background:var(--accent);
-  }
-  .case.alt::before{ background:var(--accent-2); }
-  .case-title-col{ grid-column: 1 / -1; display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; }
-  .case-title-col h3{ font-size:20px; }
-  .case-tools{ display:flex; gap:6px; flex-wrap:wrap; }
-  .case-tools span{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11.5px;
-    background:var(--bg);
-    border:1px solid var(--line);
-    padding:4px 8px;
-    border-radius:6px;
-    color:var(--ink-soft);
-  }
-  .case-block .label{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:.06em;
-    color:var(--ink-faint);
-    margin-bottom:8px;
-    display:block;
-  }
-  .case-block p{ font-size:14.5px; color:var(--ink); margin:0; }
-  .case-result{
-    display:flex; flex-direction:column; justify-content:center;
-    padding-left:24px; border-left:1px solid var(--line);
-    min-width:140px;
-  }
-  .case-result .big{
-    font-family:'JetBrains Mono',monospace;
-    font-size:28px; font-weight:600; color:var(--accent-2);
-    line-height:1;
-  }
-  .case.alt .case-result .big{ color:var(--accent-dark); }
-  .case-result .small{ font-size:12.5px; color:var(--ink-faint); margin-top:6px; }
+  .cred h3{ font-size:16.5px; margin-bottom:4px; }
+  .cred p{ font-size:14px; color:var(--ink-soft); line-height:1.5; }
+  .cred .when{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--accent-dark); white-space:nowrap; font-weight:600; }
+  .col-title{ font-family:'JetBrains Mono',monospace; font-size:13px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-faint); margin-bottom:14px; }
 
   /* ---------- CONTATO ---------- */
-  #contato{
-    background:var(--ink);
-    color:#fff;
-    border-radius:24px;
-    margin:0 32px 64px;
-    padding:72px 56px;
-  }
-  #contato .wrap{ padding:0; max-width:none; display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:center; }
-  #contato h2{ color:#fff; font-size:32px; margin-bottom:14px; }
+  #contato-wrap{ padding-top:0; }
+  #contato{ background:var(--ink); color:#fff; border-radius:24px; padding:72px 56px; }
+  #contato .inner{ display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:center; }
+  #contato h2{ color:#fff; font-size:34px; margin-bottom:14px; }
   #contato p{ color:#B9C3D6; font-size:16px; max-width:460px; }
-  .contact-list{ display:grid; gap:14px; }
-  .contact-list a, .contact-list li{
-    display:flex; align-items:center; gap:12px;
+  .contact-list{ display:grid; gap:12px; }
+  .contact-list a, .contact-list div{
+    display:flex; align-items:center; gap:14px;
     font-size:15px; color:#fff; font-weight:500;
-    padding:14px 18px;
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:10px;
+    padding:14px 18px; background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.12); border-radius:10px;
+    word-break:break-word;
   }
-  .contact-list .k{
-    font-family:'JetBrains Mono',monospace; font-size:11px;
-    color:var(--accent); text-transform:uppercase; letter-spacing:.05em;
-    width:64px; flex-shrink:0;
-  }
-
-  footer.site-footer{
-    text-align:center;
-    padding:36px 0 48px;
-    font-size:13px;
-    color:var(--ink-faint);
-  }
-
-  /* ---------- IMAGENS GENÉRICAS (trocar pelas suas) ---------- */
-  .hero-avatar{ display:flex; align-items:center; gap:14px; margin-bottom:24px; }
-  .hero-avatar img{
-    width:56px; height:56px; border-radius:50%; object-fit:cover;
-    box-shadow:0 0 0 3px var(--surface), 0 0 0 5px var(--accent-soft);
-  }
-  .hero-avatar .who b{
-    display:block; font-family:'Space Grotesk',sans-serif; font-size:15px; color:var(--ink);
-  }
-  .hero-avatar .who span{ font-size:12.5px; color:var(--ink-faint); }
-
-  .sobre-img{
-    border-radius:var(--radius);
-    overflow:hidden;
-    border:1px solid var(--line);
-    margin-bottom:24px;
-  }
-  .sobre-img img{ width:100%; display:block; }
-
-  .case-image{
-    grid-column: 1 / -1;
-    border-radius:10px;
-    overflow:hidden;
-    border:1px solid var(--line);
-    position:relative;
-    margin-bottom:8px;
-  }
-  .case-image img{
-    display:block; width:100%; height:190px; object-fit:cover;
-    transition:transform .4s ease;
-  }
-  .case-image .swap-note{
-    position:absolute; top:10px; right:10px;
-    background:rgba(16,32,61,.88); color:#fff;
-    font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.02em;
-    padding:5px 9px; border-radius:6px;
-  }
-
-  /* ---------- HOVERS ---------- */
-  .case{ transition: transform .25s ease, box-shadow .25s ease; }
-  .case:hover{
-    transform: translateY(-6px);
-    box-shadow: 0 30px 60px -28px rgba(16,32,61,.28);
-  }
-  .case:hover .case-image img{ transform: scale(1.05); }
-
-  .skill-group .chip{ transition: transform .15s ease, border-color .15s ease, background .15s ease; }
-  .chip:hover{ border-color: var(--accent); transform: translateY(-2px); }
-  .chip.core:hover{ background: var(--accent); color:#fff; }
-
-  .dash-card{ transition: transform .3s ease, box-shadow .3s ease; }
-  .dash-card:hover{ transform: translateY(-4px); box-shadow:0 30px 70px -30px rgba(16,32,61,.32); }
-
-  .contact-list a{ transition: background .15s ease, transform .15s ease; }
+  .contact-list a{ transition:background .15s ease, transform .15s ease; }
   .contact-list a:hover{ background:rgba(255,255,255,.12); transform:translateX(4px); }
+  .contact-list .k{ font-family:'JetBrains Mono',monospace; font-size:11px; color:#5FD3C7; text-transform:uppercase; letter-spacing:.05em; width:76px; flex-shrink:0; }
 
-  /* ---------- RESPONSIVE ---------- */
-  @media (max-width: 900px){
-    #hero .wrap{ grid-template-columns:1fr; }
-    #sobre .wrap{ grid-template-columns:1fr; }
+  footer.site-footer{ text-align:center; padding:36px 0 48px; font-size:13px; color:var(--ink-faint); }
+
+  /* ---------- RESPONSIVO ---------- */
+  @media (max-width:960px){
+    #hero .wrap, #sobre .wrap, #contato .inner, #formacao .cols{ grid-template-columns:1fr; }
+    #hero .wrap{ gap:56px; }
+    .hero-photo{ max-width:340px; order:-1; }
+    .float-chip.one{ left:-16px; }
+    .float-chip.two{ right:-12px; }
+    .job{ grid-template-columns:1fr; gap:20px; }
+    .case-body{ grid-template-columns:1fr; gap:18px; }
     .skill-groups{ grid-template-columns:1fr 1fr; }
-    .case{ grid-template-columns:1fr; }
-    .case-result{ border-left:none; border-top:1px solid var(--line); padding-left:0; padding-top:16px; flex-direction:row; align-items:center; gap:14px; }
-    #contato .wrap{ grid-template-columns:1fr; }
     nav.links{ display:none; }
   }
-  @media (max-width: 560px){
+  @media (max-width:600px){
     section{ padding:64px 0; }
-    #hero h1{ font-size:32px; }
-    .hero-stats{ flex-wrap:wrap; gap:18px; }
-    .hero-stats div{ flex:0 0 45%; padding-right:0; }
-    .skill-groups{ grid-template-columns:1fr; }
-    #contato{ margin:0 16px 48px; padding:48px 24px; }
-    .wrap{ padding:0 20px; }
+    .wrap{ padding:0 16px; }
+    #hero h1{ font-size:34px; }
+    .hero-stats{ grid-template-columns:1fr 1fr; }
+    .hero-photo{ max-width:280px; }
+    .float-chip{ padding:9px 12px; }
+    .float-chip b{ font-size:16px; }
+    .float-chip.two{ display:none; }
+    .float-chip.one{ bottom:-18px; left:-10px; }
+    .facts, .skill-groups, .case-result{ grid-template-columns:1fr; }
+    .job, .case-body{ padding:24px; }
+    #contato{ padding:44px 22px; border-radius:18px; }
+    #contato h2{ font-size:27px; }
   }
 </style>
 </head>
 <body>
 
-  <!-- ===================== NAV ===================== -->
+  <!-- ===================== NAVEGAÇÃO ===================== -->
   <header class="nav">
     <div class="wrap">
-      <a href="#hero" class="logo">SEU NOME<span>.</span></a>
+      <a href="#hero" class="logo">Igor Mendes<span>.</span></a>
       <nav class="links">
         <a href="#sobre">Sobre</a>
-        <a href="#skills">Competências</a>
+        <a href="#experiencia">Experiência</a>
         <a href="#projetos">Projetos</a>
+        <a href="#competencias">Competências</a>
         <a href="#contato">Contato</a>
       </nav>
-      <div class="nav-cta">
-        <a href="#contato" class="btn btn-primary">Falar comigo</a>
-      </div>
+      <a href="curriculo-igor-mendes.pdf" class="btn btn-primary" download>Currículo</a>
     </div>
   </header>
 
@@ -433,45 +306,30 @@
   <section id="hero">
     <div class="wrap">
       <div>
-        <!-- Foto genérica — troque o src abaixo pela sua foto real (quadrada, boa iluminação, fundo neutro) -->
-        <div class="hero-avatar">
-          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23E1F4F1'/%3E%3Ccircle cx='100' cy='80' r='38' fill='%230E9C90' opacity='0.55'/%3E%3Cpath d='M28 195c0-48 32-80 72-80s72 32 72 80' fill='%230E9C90' opacity='0.55'/%3E%3C/svg%3E" alt="Foto de perfil (placeholder — substitua pela sua foto)">
-          <div class="who"><b>Seu Nome</b><span>Analista de Dados</span></div>
-        </div>
-        <div class="eyebrow">Analista de Dados</div>
-        <h1>Transformo dados brutos em <em>decisões de negócio</em>.</h1>
+        <span class="status"><i></i> Aberto a vagas em Dados · remoto ou Montes Claros</span>
+        <h1>Transformo dados de processo em <em>decisões que reduzem atrasos</em>.</h1>
         <p class="lead">
-          [Uma frase curta e específica sobre o que você faz: ex. "Atuo com análise exploratória, modelagem
-          preditiva e dashboards para times comerciais e de operações tomarem decisões mais rápidas."]
+          Analista de Dados com experiência em indústria farmacêutica e de bens de consumo. Uso SQL, Python e Power BI
+          para levar dados do SAP e de sistemas de laboratório até dashboards e automações que as equipes usam no dia a dia.
         </p>
         <div class="hero-actions">
           <a href="#projetos" class="btn btn-primary">Ver projetos</a>
-          <a href="#" class="btn btn-ghost">Baixar currículo (PDF)</a>
+          <a href="curriculo-igor-mendes.pdf" class="btn btn-ghost" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Baixar currículo
+          </a>
         </div>
         <div class="hero-stats">
-          <div><span class="num">[X]</span><span class="label">Projetos de análise</span></div>
-          <div><span class="num">[Y]</span><span class="label">Ferramentas dominadas</span></div>
-          <div><span class="num">[Área]</span><span class="label">Foco de atuação</span></div>
+          <div><span class="num">−75%</span><span class="label">entregas de amostras em atraso</span></div>
+          <div><span class="num">40 min</span><span class="label">poupados por dia na rotina dos técnicos</span></div>
+          <div><span class="num">41 mil</span><span class="label">pedidos analisados no projeto de delivery</span></div>
         </div>
       </div>
 
-      <div class="dash-card">
-        <div class="dash-head">
-          <div class="dots"><span></span><span></span><span></span></div>
-          <div class="tag">painel_analitico.csv</div>
-        </div>
-        <div class="bars">
-          <i style="height:38%"></i>
-          <i style="height:62%"></i>
-          <i style="height:88%"></i>
-          <i style="height:54%"></i>
-          <i style="height:71%"></i>
-          <i style="height:45%"></i>
-        </div>
-        <div class="dash-foot">
-          <span>Métrica acompanhada <b>&uarr; 24%</b></span>
-          <span>Atualizado <b>hoje</b></span>
-        </div>
+      <div class="hero-photo">
+        <img src="images/foto_perfil.jpg" alt="Foto de Igor Mendes" width="800" height="800">
+        <div class="float-chip two"><b>Power BI · SQL · Python</b><span>stack principal</span></div>
+        <div class="float-chip one"><b>Yellow Belt</b><span>Lean Six Sigma</span></div>
       </div>
     </div>
   </section>
@@ -480,107 +338,109 @@
   <section id="sobre">
     <div class="wrap">
       <div>
-        <!-- Imagem genérica de dados — troque pela sua foto, print de um projeto, ou remova -->
-        <div class="sobre-img">
-          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Crect width='400' height='260' fill='%23F4F7FA'/%3E%3Cline x1='40' y1='30' x2='40' y2='220' stroke='%23E1E7EF' stroke-width='2'/%3E%3Cline x1='40' y1='220' x2='370' y2='220' stroke='%23E1E7EF' stroke-width='2'/%3E%3Crect x='60' y='140' width='30' height='80' fill='%230E9C90' opacity='0.85'/%3E%3Crect x='110' y='100' width='30' height='120' fill='%230E9C90' opacity='0.6'/%3E%3Crect x='160' y='160' width='30' height='60' fill='%230E9C90' opacity='0.85'/%3E%3Crect x='210' y='70' width='30' height='150' fill='%23E5811E' opacity='0.85'/%3E%3Crect x='260' y='120' width='30' height='100' fill='%230E9C90' opacity='0.6'/%3E%3Cpolyline points='60,120 110,90 160,130 210,50 260,95 310,60' fill='none' stroke='%2310203D' stroke-width='2.5'/%3E%3Ccircle cx='310' cy='60' r='4' fill='%2310203D'/%3E%3C/svg%3E" alt="Ilustração genérica de análise de dados (placeholder)">
-        </div>
         <div class="eyebrow">Sobre mim</div>
-        <h2>Quem entrega a análise por trás do gráfico.</h2>
+        <h2>Engenheiro de formação, analista de dados na prática.</h2>
       </div>
-      <div>
+      <div class="text">
         <p>
-          [Escreva 2–3 frases objetivas sobre sua trajetória: formação, tempo de experiência (mesmo que seja
-          com projetos pessoais/estudos), e o tipo de problema que você gosta de resolver. Evite frases genéricas
-          como "apaixonado por dados" — prefira algo concreto, como o setor ou tipo de análise que você domina.]
+          Sou Igor Mendes, tenho 26 anos e sou norte-mineiro. Trabalho com dados há cerca de <strong>2 anos</strong>,
+          com experiência em <strong>ETL</strong> e em <strong>visualização de dados com storytelling</strong>.
+          Hoje estagio no <strong>Controle de Qualidade Microbiológico da Novo Nordisk</strong>, onde transformo dados
+          de processo em informações que apoiam a tomada de decisão.
         </p>
-        <ul class="sobre-points">
-          <li>[Ponto forte 1 — ex: "Experiência prática transformando planilhas dispersas em dashboards de acompanhamento."]</li>
-          <li>[Ponto forte 2 — ex: "Domínio de SQL para consultas complexas em bases relacionais."]</li>
-          <li>[Ponto forte 3 — ex: "Facilidade em traduzir resultados técnicos para stakeholders não técnicos."]</li>
-        </ul>
+        <p>
+          Sou <strong>Engenheiro Químico</strong> e <strong>Bacharel em Ciência e Tecnologia</strong> pela UFVJM, uma
+          formação que me dá visão analítica sobre processos. Sigo a filosofia <strong>Kaizen</strong> de melhoria
+          contínua e vejo na <strong>Ciência de Dados</strong> o próximo passo da minha carreira: transformar dados em
+          decisões seguras que tornem os processos mais eficientes.
+        </p>
+        <div class="facts">
+          <div class="fact"><span class="k">Base</span><span class="v">Montes Claros – MG</span></div>
+          <div class="fact"><span class="k">Formação</span><span class="v">Engenharia Química · UFVJM</span></div>
+          <div class="fact"><span class="k">Melhoria contínua</span><span class="v">Lean Six Sigma Yellow Belt</span></div>
+          <div class="fact"><span class="k">Idiomas</span><span class="v">Inglês intermediário · Espanhol básico</span></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== COMPETÊNCIAS (ex "Erat lacinia") ===================== -->
-  <section id="skills">
+  <!-- ===================== EXPERIÊNCIA ===================== -->
+  <section id="experiencia">
     <div class="wrap">
-      <div class="head">
-        <div class="eyebrow">Competências</div>
-        <h2>O que um analista de dados precisa entregar.</h2>
-        <p>Lista ampla para você filtrar o que é realmente seu ponto forte — chips destacados marcam sugestões de competências mais valorizadas por recrutadores.</p>
+      <div class="section-head">
+        <div class="eyebrow">Experiência</div>
+        <h2>Dados a serviço da operação.</h2>
+        <p>Dashboards, automações e aplicativos criados para resolver problemas reais de laboratório e de manutenção industrial.</p>
       </div>
 
-      <div class="skill-groups">
-        <div class="skill-group">
-          <h3>Linguagens & Ferramentas</h3>
-          <div class="chip-row">
-            <span class="chip core">SQL</span>
-            <span class="chip core">Python</span>
-            <span class="chip">R</span>
-            <span class="chip">Excel avançado</span>
-            <span class="chip">Google Sheets</span>
-            <span class="chip">VBA</span>
-          </div>
-        </div>
+      <div class="timeline">
 
-        <div class="skill-group">
-          <h3>Análise & Estatística</h3>
-          <div class="chip-row">
-            <span class="chip core">Análise exploratória (EDA)</span>
-            <span class="chip">Estatística descritiva</span>
-            <span class="chip">Testes de hipótese</span>
-            <span class="chip">A/B Testing</span>
-            <span class="chip">Séries temporais</span>
-            <span class="chip">Modelagem preditiva</span>
-            <span class="chip">Machine Learning (básico)</span>
+        <!-- NOVO NORDISK -->
+        <article class="job">
+          <div class="job-meta">
+            <span class="period">JUL/2025 – ATUAL</span>
+            <h3>Novo Nordisk</h3>
+            <p class="role">Estagiário · Controle de Qualidade Microbiológico e Supply Chain</p>
+            <div class="stack">
+              <span class="tag">Power BI</span><span class="tag">SQL Server</span><span class="tag">Python</span>
+              <span class="tag">Power Automate</span><span class="tag">Power Apps</span><span class="tag">SAP</span>
+              <span class="tag">Global LIMS</span><span class="tag">PEMS</span>
+            </div>
           </div>
-        </div>
+          <div>
+            <div class="impact">
+              <div><b>−75%</b><span>de entregas em atraso com dashboards de lead time que deram previsibilidade às análises</span></div>
+              <div><b>40 min/dia</b><span>poupados pelos técnicos com um app que indica na hora os pontos de coleta de água</span></div>
+            </div>
+            <ul class="bullets">
+              <li>Dashboards de Timeliness e Lead Time das análises e de fechamento semanal, para acompanhar a tendência do laboratório, avaliar desempenho e encontrar gargalos.</li>
+              <li>Dashboards de apoio à governança do setor.</li>
+              <li>Extração de dados do SAP, Global LIMS e PEMS e tratamento em SQL Server.</li>
+              <li>Automações em Power Automate para avisar sobre ordens de serviço pendentes e atualizar conjuntos de dados.</li>
+              <li>Aplicativos em Power Apps que transformam dados brutos em informação direcionada e fácil de consultar.</li>
+              <li>Chatbot com IA que tira dúvidas a partir de consultas aos documentos do setor.</li>
+            </ul>
+          </div>
+        </article>
 
-        <div class="skill-group">
-          <h3>Visualização & BI</h3>
-          <div class="chip-row">
-            <span class="chip core">Power BI</span>
-            <span class="chip core">Tableau</span>
-            <span class="chip">Looker Studio</span>
-            <span class="chip">Storytelling com dados</span>
-            <span class="chip">Design de dashboards</span>
+        <!-- ALPARGATAS -->
+        <article class="job">
+          <div class="job-meta">
+            <span class="period">FEV/2025 – JUL/2025</span>
+            <h3>Alpargatas</h3>
+            <p class="role">Estagiário · Planejamento e Controle da Manutenção (PCM)</p>
+            <div class="stack">
+              <span class="tag">Power BI</span><span class="tag">Power Query</span><span class="tag">SAP</span><span class="tag">Lean Six Sigma</span>
+            </div>
           </div>
-        </div>
+          <div>
+            <ul class="bullets">
+              <li>Projeto <strong>Yellow Belt</strong> de governança das ordens de serviço de manutenção.</li>
+              <li>Dashboard que acompanha as ordens de serviço da criação à finalização, com falhas de equipamentos, tempo de reparo e indicadores de desempenho. Continua em uso pela equipe.</li>
+              <li>Tratamento de dados do SAP com Power Query e análise de indicadores para apoiar a priorização das ordens.</li>
+            </ul>
+          </div>
+        </article>
 
-        <div class="skill-group">
-          <h3>Dados & Engenharia</h3>
-          <div class="chip-row">
-            <span class="chip core">ETL / pipelines</span>
-            <span class="chip">PostgreSQL</span>
-            <span class="chip">MySQL</span>
-            <span class="chip">Git & GitHub</span>
-            <span class="chip">Cloud (AWS / GCP / Azure)</span>
-            <span class="chip">Airflow / dbt</span>
+        <!-- PESQUISA -->
+        <article class="job">
+          <div class="job-meta">
+            <span class="period">PESQUISA</span>
+            <h3>Artigo científico</h3>
+            <p class="role">UFVJM · Quimiometria e estatística aplicada</p>
+            <div class="stack">
+              <span class="tag">R</span><span class="tag">Regressão (MMQ)</span><span class="tag">Estatística</span>
+            </div>
           </div>
-        </div>
+          <div>
+            <p style="font-size:15px; margin-bottom:12px;"><strong>“Desenvolvimento de pacote em ambiente R para avaliar figuras de mérito utilizadas na validação de métodos analíticos”</strong></p>
+            <ul class="bullets">
+              <li>Pacote em R que automatiza os cálculos estatísticos da validação de métodos analíticos.</li>
+              <li>Regressão pelo método dos mínimos quadrados ordinários com verificação das premissas, além de seletividade, efeito de matriz e limites de detecção e de quantificação.</li>
+            </ul>
+          </div>
+        </article>
 
-        <div class="skill-group">
-          <h3>Negócio & Impacto</h3>
-          <div class="chip-row">
-            <span class="chip core">Definição de KPIs</span>
-            <span class="chip">Priorização orientada a dados</span>
-            <span class="chip">Análise de churn</span>
-            <span class="chip">Análise de funil</span>
-            <span class="chip">Precificação</span>
-          </div>
-        </div>
-
-        <div class="skill-group">
-          <h3>Comportamentais</h3>
-          <div class="chip-row">
-            <span class="chip core">Comunicação com stakeholders</span>
-            <span class="chip">Pensamento crítico</span>
-            <span class="chip">Autonomia</span>
-            <span class="chip">Curiosidade investigativa</span>
-            <span class="chip">Trabalho em equipe</span>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -588,141 +448,195 @@
   <!-- ===================== PROJETOS ===================== -->
   <section id="projetos">
     <div class="wrap">
-      <div class="head">
-        <div>
-          <div class="eyebrow">Projetos</div>
-          <h2>Mini-cases: problema, solução e resultado.</h2>
-        </div>
-        <p>Cada card resume um projeto real em segundos — o essencial para quem está avaliando um currículo.</p>
+      <div class="section-head">
+        <div class="eyebrow">Projetos</div>
+        <h2>Do dado bruto à decisão.</h2>
+        <p>Projetos públicos, com código aberto e painel online, para você ver o método de ponta a ponta.</p>
       </div>
 
-      <span class="note-example">⚠ Projetos abaixo são EXEMPLOS — substitua pelos seus, mantendo a mesma estrutura</span>
-
-      <div class="case-grid">
-
-        <!-- CASE 1 -->
-        <article class="case">
-          <!-- Screenshot placeholder — troque o src pela imagem real do seu dashboard/notebook -->
-          <div class="case-image">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 190'%3E%3Crect width='600' height='190' fill='%23FFFFFF'/%3E%3Crect x='0' y='0' width='600' height='28' fill='%23F4F7FA'/%3E%3Ccircle cx='16' cy='14' r='4' fill='%23E1E7EF'/%3E%3Ccircle cx='30' cy='14' r='4' fill='%23E1E7EF'/%3E%3Ccircle cx='44' cy='14' r='4' fill='%23E1E7EF'/%3E%3Crect x='24' y='50' width='120' height='120' rx='6' fill='%23E1F4F1'/%3E%3Cpath d='M40 150 L60 110 L80 130 L100 80 L120 100 L140 60' fill='none' stroke='%230E9C90' stroke-width='3'/%3E%3Crect x='160' y='50' width='90' height='120' rx='6' fill='%23FDECD9'/%3E%3Crect x='175' y='120' width='16' height='40' fill='%23E5811E'/%3E%3Crect x='198' y='90' width='16' height='70' fill='%23E5811E' opacity='0.7'/%3E%3Crect x='221' y='105' width='16' height='55' fill='%23E5811E' opacity='0.5'/%3E%3Crect x='270' y='50' width='306' height='55' rx='6' fill='%23F4F7FA'/%3E%3Crect x='270' y='115' width='306' height='55' rx='6' fill='%23F4F7FA'/%3E%3C/svg%3E" alt="Placeholder de dashboard — substitua pela screenshot real do projeto de churn">
-            <span class="swap-note">substituir por print real</span>
-          </div>
-          <div class="case-title-col">
-            <h3>Redução de churn em base de assinantes</h3>
-            <div class="case-tools">
-              <span>Python</span><span>SQL</span><span>Power BI</span>
-            </div>
+      <!-- PROJETO: DELIVERY -->
+      <article class="case">
+        <a class="case-image" href="https://cury-delivery-analytics-ghijfz5ndwznvpqbqn6nux.streamlit.app/" target="_blank" rel="noopener">
+          <img src="images/projetos/delivery-painel.jpg" alt="Tela inicial do painel Inteligência de Entregas" loading="lazy">
+          <span class="live"><i></i> painel online</span>
+        </a>
+        <div class="case-body">
+          <div class="case-col">
+          <div>
+            <h3>Inteligência de Entregas</h3>
+            <p class="sub">Onde o tempo de entrega se perde em uma operação de delivery e quanto vale recuperá-lo.</p>
           </div>
           <div class="case-block">
             <span class="label">Problema</span>
-            <p>Empresa perdia [X]% dos assinantes por mês sem saber quais fatores antecipavam o cancelamento.</p>
+            <p>A empresa acompanhava só médias de tempo, que misturam trânsito, clima, distância e desempenho do entregador. Sem isso separado, não dava para saber por onde começar.</p>
           </div>
           <div class="case-block">
             <span class="label">Solução</span>
-            <p>Análise exploratória + modelo de propensão ao cancelamento, com dashboard de acompanhamento por segmento de cliente.</p>
+            <p>Painel executivo de 6 páginas: base auditada com funil de limpeza, regressão para isolar cada fator, entregadores comparados no próprio contexto e oportunidades medidas em minutos.</p>
           </div>
-          <div class="case-block">
-            <span class="label">Ferramentas</span>
-            <p>Extração via SQL, modelagem em Python (scikit-learn), visualização em Power BI.</p>
           </div>
+          <div class="case-col">
+          <span class="case-block"><span class="label">Principais resultados</span></span>
           <div class="case-result">
-            <span class="big">-18%</span>
-            <span class="small">de churn em 3 meses</span>
+            <div><b>30,5%</b><span>das entregas passam de 30 min</span></div>
+            <div><b>+16 min</b><span>com 2+ entregas simultâneas, a maior alavanca sob gestão</span></div>
           </div>
-        </article>
+          <div class="case-tools">
+            <span class="tag">Python</span><span class="tag">pandas</span><span class="tag">Plotly</span>
+            <span class="tag">Streamlit</span><span class="tag">Regressão OLS</span><span class="tag">pytest</span>
+          </div>
+          <div class="case-actions">
+            <a class="btn btn-primary" href="https://cury-delivery-analytics-ghijfz5ndwznvpqbqn6nux.streamlit.app/" target="_blank" rel="noopener">Abrir painel</a>
+            <a class="btn btn-ghost" href="https://github.com/Ig0rMendes/cury-delivery-analytics" target="_blank" rel="noopener">Ver código</a>
+          </div>
+          </div>
+        </div>
+      </article>
 
-        <!-- CASE 2 -->
-        <article class="case alt">
-          <!-- Screenshot placeholder — troque o src pela imagem real do seu dashboard/planilha -->
-          <div class="case-image">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 190'%3E%3Crect width='600' height='190' fill='%23FFFFFF'/%3E%3Crect x='0' y='0' width='600' height='28' fill='%23F4F7FA'/%3E%3Ccircle cx='16' cy='14' r='4' fill='%23E1E7EF'/%3E%3Ccircle cx='30' cy='14' r='4' fill='%23E1E7EF'/%3E%3Ccircle cx='44' cy='14' r='4' fill='%23E1E7EF'/%3E%3Crect x='24' y='50' width='260' height='120' rx='6' fill='%23FDECD9'/%3E%3Crect x='44' y='140' width='24' height='20' fill='%23E5811E'/%3E%3Crect x='78' y='110' width='24' height='50' fill='%23E5811E' opacity='0.8'/%3E%3Crect x='112' y='90' width='24' height='70' fill='%23E5811E' opacity='0.6'/%3E%3Crect x='146' y='120' width='24' height='40' fill='%23E5811E' opacity='0.8'/%3E%3Crect x='180' y='70' width='24' height='90' fill='%23E5811E'/%3E%3Crect x='214' y='105' width='24' height='55' fill='%23E5811E' opacity='0.6'/%3E%3Crect x='300' y='50' width='276' height='55' rx='6' fill='%23E1F4F1'/%3E%3Crect x='300' y='115' width='276' height='55' rx='6' fill='%23F4F7FA'/%3E%3C/svg%3E" alt="Placeholder de dashboard — substitua pela screenshot real do projeto de estoque">
-            <span class="swap-note">substituir por print real</span>
+      <!--
+        MODELO PARA NOVOS PROJETOS: copie o bloco <article class="case"> acima,
+        troque a imagem (salve em images/projetos/), textos, números, ferramentas e links.
+        Depois, se quiser, apague o aviso "Novos projetos em andamento" abaixo.
+      -->
+
+      <div class="coming">
+        <span aria-hidden="true">🛠️</span>
+        <p><b>Novos projetos em andamento.</b> Acompanhe pelo <a href="https://github.com/Ig0rMendes" target="_blank" rel="noopener" style="color:var(--accent-dark); font-weight:600;">meu GitHub</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== COMPETÊNCIAS ===================== -->
+  <section id="competencias">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Competências</div>
+        <h2>Ferramentas que uso no dia a dia.</h2>
+        <p>Em destaque, as que mais uso na prática.</p>
+      </div>
+
+      <div class="skill-groups">
+        <div class="skill-group">
+          <h3>Dados & ETL</h3>
+          <div class="chip-row">
+            <span class="chip core">SQL Server</span><span class="chip core">Power Query</span><span class="chip core">ETL</span>
+            <span class="chip">MySQL</span><span class="chip">SAP</span><span class="chip">Global LIMS</span>
+            <span class="chip">PEMS</span><span class="chip">ADA</span>
           </div>
-          <div class="case-title-col">
-            <h3>Otimização de estoque em rede de lojas</h3>
-            <div class="case-tools">
-              <span>SQL</span><span>Excel</span><span>Looker Studio</span>
+        </div>
+        <div class="skill-group">
+          <h3>BI & Visualização</h3>
+          <div class="chip-row">
+            <span class="chip core">Power BI</span><span class="chip core">Storytelling com dados</span>
+            <span class="chip">Definição de KPIs</span><span class="chip">Plotly</span><span class="chip">Streamlit</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Programação & Estatística</h3>
+          <div class="chip-row">
+            <span class="chip core">Python</span><span class="chip">pandas</span><span class="chip">R</span>
+            <span class="chip">Análise exploratória</span><span class="chip">Estatística descritiva</span>
+            <span class="chip">Regressão linear</span><span class="chip">pytest</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Automação & Power Platform</h3>
+          <div class="chip-row">
+            <span class="chip core">Power Automate</span><span class="chip core">Power Apps</span>
+            <span class="chip">Excel avançado</span><span class="chip">Office Scripts</span><span class="chip">Chatbots com IA</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Melhoria contínua</h3>
+          <div class="chip-row">
+            <span class="chip core">Lean Six Sigma</span><span class="chip">Kaizen</span><span class="chip">5S</span>
+            <span class="chip">Análise de gargalos</span><span class="chip">Governança de processos</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Versionamento & Idiomas</h3>
+          <div class="chip-row">
+            <span class="chip core">Git & GitHub</span><span class="chip">Ambientes virtuais</span>
+            <span class="chip">Inglês intermediário</span><span class="chip">Espanhol básico</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FORMAÇÃO E CERTIFICAÇÕES ===================== -->
+  <section id="formacao" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Formação</div>
+        <h2>Formação e certificações.</h2>
+      </div>
+      <div class="cols">
+        <div>
+          <p class="col-title">Formação acadêmica</p>
+          <div class="cred-list">
+            <div class="cred">
+              <div><h3>Engenharia Química</h3><p>UFVJM</p></div>
+              <span class="when">2023–2026</span>
+            </div>
+            <div class="cred">
+              <div><h3>Bacharelado em Ciência e Tecnologia</h3><p>UFVJM</p></div>
+              <span class="when">2019–2023</span>
             </div>
           </div>
-          <div class="case-block">
-            <span class="label">Problema</span>
-            <p>Ruptura de estoque em produtos de alta rotatividade gerava perda de vendas em [X] lojas.</p>
-          </div>
-          <div class="case-block">
-            <span class="label">Solução</span>
-            <p>Modelo de previsão de demanda por loja e categoria, com alertas automáticos de reposição.</p>
-          </div>
-          <div class="case-block">
-            <span class="label">Ferramentas</span>
-            <p>Consultas SQL em base transacional, tratamento em Excel, painel em Looker Studio.</p>
-          </div>
-          <div class="case-result">
-            <span class="big">+12%</span>
-            <span class="small">de disponibilidade de produto</span>
-          </div>
-        </article>
-
-        <!-- CASE 3 -->
-        <article class="case">
-          <!-- Screenshot placeholder — troque o src pela imagem real do seu dashboard -->
-          <div class="case-image">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 190'%3E%3Crect width='600' height='190' fill='%23FFFFFF'/%3E%3Crect x='0' y='0' width='600' height='28' fill='%23F4F7FA'/%3E%3Ccircle cx='16' cy='14' r='4' fill='%23E1E7EF'/%3E%3Ccircle cx='30' cy='14' r='4' fill='%23E1E7EF'/%3E%3Ccircle cx='44' cy='14' r='4' fill='%23E1E7EF'/%3E%3Crect x='24' y='50' width='130' height='55' rx='6' fill='%23E1F4F1'/%3E%3Crect x='166' y='50' width='130' height='55' rx='6' fill='%23FDECD9'/%3E%3Crect x='308' y='50' width='268' height='55' rx='6' fill='%23F4F7FA'/%3E%3Crect x='24' y='115' width='552' height='55' rx='6' fill='%23F4F7FA'/%3E%3Cpolyline points='44,155 90,140 136,150 182,120 228,135 274,105 320,125 366,95' fill='none' stroke='%230E9C90' stroke-width='2.5'/%3E%3C/svg%3E" alt="Placeholder de dashboard — substitua pela screenshot real do projeto comercial">
-            <span class="swap-note">substituir por print real</span>
-          </div>
-          <div class="case-title-col">
-            <h3>Dashboard de performance comercial</h3>
-            <div class="case-tools">
-              <span>Python</span><span>PostgreSQL</span><span>Tableau</span>
+        </div>
+        <div>
+          <p class="col-title">Certificações</p>
+          <div class="cred-list">
+            <div class="cred">
+              <div><h3>Lean Six Sigma Yellow Belt</h3><p>Projeto de governança de ordens de serviço · Alpargatas</p></div>
+              <span class="when">2025</span>
             </div>
-          </div>
-          <div class="case-block">
-            <span class="label">Problema</span>
-            <p>Time comercial não tinha visão consolidada de metas, funil e conversão por vendedor.</p>
-          </div>
-          <div class="case-block">
-            <span class="label">Solução</span>
-            <p>Pipeline de dados automatizado + dashboard interativo com KPIs de funil, metas e ranking.</p>
-          </div>
-          <div class="case-block">
-            <span class="label">Ferramentas</span>
-            <p>ETL em Python, banco PostgreSQL, visualização em Tableau atualizada diariamente.</p>
-          </div>
-          <div class="case-result">
-            <span class="big">6h → 5min</span>
-            <span class="small">tempo de geração do relatório</span>
-          </div>
-        </article>
 
+            <!--
+              NOVAS CERTIFICAÇÕES: copie o bloco abaixo, tire do comentário e preencha.
+              Se tiver link de verificação (Credly, Microsoft Learn etc.), troque o <div class="cred"> por
+              <a class="cred" href="LINK" target="_blank" rel="noopener"> ... </a>
+
+            <div class="cred">
+              <div><h3>Nome da certificação</h3><p>Instituição emissora</p></div>
+              <span class="when">2026</span>
+            </div>
+            -->
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ===================== CONTATO ===================== -->
   <section id="contato-wrap">
-    <div id="contato">
-      <div class="wrap">
-        <div>
-          <div class="eyebrow" style="color:var(--accent);">Contato</div>
-          <h2>Vamos conversar sobre a próxima vaga?</h2>
-          <p>Aberto a oportunidades como Analista de Dados Jr/Pleno. Respondo rápido — o próximo passo é só chamar.</p>
-        </div>
-        <div class="contact-list">
-          <a href="mailto:seuemail@email.com"><span class="k">EMAIL</span> seuemail@email.com</a>
-          <a href="#"><span class="k">LINKEDIN</span> linkedin.com/in/seunome</a>
-          <a href="#"><span class="k">GITHUB</span> github.com/seunome</a>
-          <li><span class="k">LOCAL</span> Sua cidade, UF</li>
+    <div class="wrap">
+      <div id="contato">
+        <div class="inner">
+          <div>
+            <div class="eyebrow" style="color:#5FD3C7;">Contato</div>
+            <h2>Vamos conversar sobre a próxima vaga?</h2>
+            <p>Estou aberto a oportunidades em Análise e Ciência de Dados, remotas ou presenciais em Montes Claros – MG.</p>
+          </div>
+          <div class="contact-list">
+            <a href="mailto:igorsamendes13@gmail.com"><span class="k">E-mail</span> igorsamendes13@gmail.com</a>
+            <a href="https://wa.me/5538984088376" target="_blank" rel="noopener"><span class="k">WhatsApp</span> (38) 98408-8376</a>
+            <a href="https://www.linkedin.com/in/igor-mendes-a50550239" target="_blank" rel="noopener"><span class="k">LinkedIn</span> linkedin.com/in/igor-mendes-a50550239</a>
+            <a href="https://github.com/Ig0rMendes" target="_blank" rel="noopener"><span class="k">GitHub</span> github.com/Ig0rMendes</a>
+            <div><span class="k">Local</span> Montes Claros – MG · remoto ou presencial</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <footer class="site-footer">
-    <p>© <span id="year"></span> Seu Nome. Portfólio de Analista de Dados.</p>
+    <p>© <span id="year">2026</span> Igor Mendes · Analista de Dados</p>
   </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
-
 </body>
 </html>
