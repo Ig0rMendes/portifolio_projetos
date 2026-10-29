@@ -201,6 +201,17 @@
   .case-actions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:auto; }
   .case-actions .btn{ padding:11px 18px; font-size:14px; }
 
+  .case-block ul.recs{ display:grid; gap:8px; }
+  .case-block ul.recs li{ position:relative; padding-left:22px; font-size:14.5px; color:var(--ink); line-height:1.5; }
+  .case-block ul.recs li::before{ content:"→"; position:absolute; left:0; top:0; color:var(--accent-dark); font-weight:700; }
+  .case-note{
+    font-size:13px; color:var(--ink-soft); line-height:1.5;
+    background:var(--bg); border-left:3px solid var(--accent-2); border-radius:6px; padding:10px 14px;
+  }
+  .case-note b{ color:var(--ink); }
+  .paper-link{ display:inline-flex; align-items:center; gap:6px; margin-top:14px; font-size:14px; font-weight:600; color:var(--accent-dark); }
+  .paper-link:hover{ text-decoration:underline; }
+
   .coming{
     margin-top:24px; border:1.5px dashed #C9D3E0; border-radius:14px;
     padding:22px 26px; display:flex; align-items:center; gap:14px;
@@ -234,6 +245,9 @@
   .cred h3{ font-size:16.5px; margin-bottom:4px; }
   .cred p{ font-size:14px; color:var(--ink-soft); line-height:1.5; }
   .cred .when{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--accent-dark); white-space:nowrap; font-weight:600; }
+  a.cred{ transition:border-color .15s ease, transform .15s ease; }
+  a.cred:hover{ border-color:var(--accent); transform:translateY(-2px); }
+  a.cred .see{ display:block; margin-top:6px; font-size:12.5px; font-weight:600; color:var(--accent-dark); }
   .col-title{ font-family:'JetBrains Mono',monospace; font-size:13px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-faint); margin-bottom:14px; }
 
   /* ---------- CONTATO ---------- */
@@ -298,7 +312,7 @@
         <a href="#competencias">Competências</a>
         <a href="#contato">Contato</a>
       </nav>
-      <a href="curriculo-igor-mendes.pdf" class="btn btn-primary" download>Currículo</a>
+      <a href="curriculo-igor-mendes.pdf" class="btn btn-primary" target="_blank" rel="noopener">Currículo</a>
     </div>
   </header>
 
@@ -314,15 +328,15 @@
         </p>
         <div class="hero-actions">
           <a href="#projetos" class="btn btn-primary">Ver projetos</a>
-          <a href="curriculo-igor-mendes.pdf" class="btn btn-ghost" download>
+          <a href="curriculo-igor-mendes.pdf" class="btn btn-ghost" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
-            Baixar currículo
+            Ver currículo
           </a>
         </div>
         <div class="hero-stats">
-          <div><span class="num">−75%</span><span class="label">entregas de amostras em atraso</span></div>
+          <div><span class="num">−35%</span><span class="label">de atrasos em amostras com dashboards de lead time</span></div>
           <div><span class="num">40 min</span><span class="label">poupados por dia na rotina dos técnicos</span></div>
-          <div><span class="num">41 mil</span><span class="label">pedidos analisados no projeto de delivery</span></div>
+          <div><span class="num">53,5%</span><span class="label">dos atrasos explicados pelo trânsito no projeto de delivery</span></div>
         </div>
       </div>
 
@@ -339,26 +353,26 @@
     <div class="wrap">
       <div>
         <div class="eyebrow">Sobre mim</div>
-        <h2>Engenheiro de formação, analista de dados na prática.</h2>
+        <h2>Engenharia na base, análise de dados na prática.</h2>
       </div>
       <div class="text">
         <p>
-          Sou Igor Mendes, tenho 26 anos e sou norte-mineiro. Trabalho com dados há cerca de <strong>2 anos</strong>,
+          Sou Igor Mendes, norte-mineiro. Trabalho com dados há cerca de <strong>2 anos</strong>,
           com experiência em <strong>ETL</strong> e em <strong>visualização de dados com storytelling</strong>.
           Hoje estagio no <strong>Controle de Qualidade Microbiológico da Novo Nordisk</strong>, onde transformo dados
           de processo em informações que apoiam a tomada de decisão.
         </p>
         <p>
-          Sou <strong>Engenheiro Químico</strong> e <strong>Bacharel em Ciência e Tecnologia</strong> pela UFVJM, uma
-          formação que me dá visão analítica sobre processos. Sigo a filosofia <strong>Kaizen</strong> de melhoria
-          contínua e vejo na <strong>Ciência de Dados</strong> o próximo passo da minha carreira: transformar dados em
-          decisões seguras que tornem os processos mais eficientes.
+          Sou <strong>Bacharel em Ciência e Tecnologia</strong> e formando em <strong>Engenharia Química</strong> pela
+          UFVJM (conclusão prevista para dez/2026), uma formação que me dá visão analítica sobre processos. Sigo a
+          filosofia <strong>Kaizen</strong> de melhoria contínua e busco crescer em <strong>Análise de Dados</strong>,
+          transformando dados em decisões seguras que tornem os processos mais eficientes.
         </p>
         <div class="facts">
           <div class="fact"><span class="k">Base</span><span class="v">Montes Claros – MG</span></div>
-          <div class="fact"><span class="k">Formação</span><span class="v">Engenharia Química · UFVJM</span></div>
+          <div class="fact"><span class="k">Formação</span><span class="v">Engenharia Química · UFVJM · dez/2026</span></div>
           <div class="fact"><span class="k">Melhoria contínua</span><span class="v">Lean Six Sigma Yellow Belt</span></div>
-          <div class="fact"><span class="k">Idiomas</span><span class="v">Inglês intermediário · Espanhol básico</span></div>
+          <div class="fact"><span class="k">Idiomas</span><span class="v">Inglês intermediário (B1)</span></div>
         </div>
       </div>
     </div>
@@ -389,7 +403,7 @@
           </div>
           <div>
             <div class="impact">
-              <div><b>−75%</b><span>de entregas em atraso com dashboards de lead time que deram previsibilidade às análises</span></div>
+              <div><b>−35%</b><span>de entregas em atraso com dashboards de lead time que deram previsibilidade às análises</span></div>
               <div><b>40 min/dia</b><span>poupados pelos técnicos com um app que indica na hora os pontos de coleta de água</span></div>
             </div>
             <ul class="bullets">
@@ -427,7 +441,7 @@
           <div class="job-meta">
             <span class="period">PESQUISA</span>
             <h3>Artigo científico</h3>
-            <p class="role">UFVJM · Quimiometria e estatística aplicada</p>
+            <p class="role">Revista de Engenharia e Tecnologia · UFVJM · Quimiometria e estatística aplicada</p>
             <div class="stack">
               <span class="tag">R</span><span class="tag">Regressão (MMQ)</span><span class="tag">Estatística</span>
             </div>
@@ -438,6 +452,7 @@
               <li>Pacote em R que automatiza os cálculos estatísticos da validação de métodos analíticos.</li>
               <li>Regressão pelo método dos mínimos quadrados ordinários com verificação das premissas, além de seletividade, efeito de matriz e limites de detecção e de quantificação.</li>
             </ul>
+            <a class="paper-link" href="https://revistas.uepg.br/index.php/ret/pt_BR/article/view/23889" target="_blank" rel="noopener">Ler o artigo na Revista de Engenharia e Tecnologia ↗</a>
           </div>
         </article>
 
@@ -472,19 +487,32 @@
           </div>
           <div class="case-block">
             <span class="label">Solução</span>
-            <p>Painel executivo de 6 páginas: base auditada com funil de limpeza, regressão para isolar cada fator, entregadores comparados no próprio contexto e oportunidades medidas em minutos.</p>
+            <p>Painel executivo de 6 páginas sobre <strong>41,5 mil pedidos</strong> (de 45,6 mil brutos): base auditada com funil de limpeza, regressão para isolar trânsito, clima, distância e carga, entregadores comparados no próprio contexto e oportunidades medidas em minutos.</p>
+          </div>
+          <div class="case-block">
+            <span class="label">Recomendações ao negócio</span>
+            <ul class="recs">
+              <li>Ajustar roteirização e janelas de saída nos horários de trânsito pesado: <strong>−2,3 min</strong> na média geral.</li>
+              <li>Limitar entregas simultâneas a uma por entregador, agrupando só pedidos próximos.</li>
+              <li><strong>Não contratar para o pico:</strong> ele é 6,9 min mais lento por causa do trânsito, não por falta de entregador.</li>
+              <li>Definir o prazo prometido pela combinação clima × trânsito e incluir festivais (+19,4 min) na escala.</li>
+              <li>Não ranquear entregadores: no próprio contexto, o desempenho é homogêneo.</li>
+            </ul>
           </div>
           </div>
           <div class="case-col">
           <span class="case-block"><span class="label">Principais resultados</span></span>
           <div class="case-result">
-            <div><b>30,5%</b><span>das entregas passam de 30 min</span></div>
-            <div><b>+16 min</b><span>com 2+ entregas simultâneas, a maior alavanca sob gestão</span></div>
+            <div><b>53,5%</b><span>dos atrasos vêm do trânsito congestionado, presente em 31,7% dos pedidos</span></div>
+            <div><b>+16 min</b><span>com 2+ entregas simultâneas: todas passam do prazo</span></div>
+            <div><b>2% → 51%</b><span>taxa de atraso das 9h às 20h</span></div>
+            <div><b>−0,32</b><span>ponto na nota do cliente quando a entrega atrasa</span></div>
           </div>
           <div class="case-tools">
-            <span class="tag">Python</span><span class="tag">pandas</span><span class="tag">Plotly</span>
+            <span class="tag">Python</span><span class="tag">pandas</span><span class="tag">NumPy</span><span class="tag">Plotly</span>
             <span class="tag">Streamlit</span><span class="tag">Regressão OLS</span><span class="tag">pytest</span>
           </div>
+          <p class="case-note"><b>Ressalva:</b> a base pública tem aparência de dados sintéticos. Os números demonstram o método; as recomendações não foram aplicadas em uma operação real.</p>
           <div class="case-actions">
             <a class="btn btn-primary" href="https://cury-delivery-analytics-ghijfz5ndwznvpqbqn6nux.streamlit.app/" target="_blank" rel="noopener">Abrir painel</a>
             <a class="btn btn-ghost" href="https://github.com/Ig0rMendes/cury-delivery-analytics" target="_blank" rel="noopener">Ver código</a>
@@ -496,13 +524,8 @@
       <!--
         MODELO PARA NOVOS PROJETOS: copie o bloco <article class="case"> acima,
         troque a imagem (salve em images/projetos/), textos, números, ferramentas e links.
-        Depois, se quiser, apague o aviso "Novos projetos em andamento" abaixo.
+        Separe os cards com um espaço (ex.: style="margin-top:24px;" no novo <article>).
       -->
-
-      <div class="coming">
-        <span aria-hidden="true">🛠️</span>
-        <p><b>Novos projetos em andamento.</b> Acompanhe pelo <a href="https://github.com/Ig0rMendes" target="_blank" rel="noopener" style="color:var(--accent-dark); font-weight:600;">meu GitHub</a>.</p>
-      </div>
     </div>
   </section>
 
@@ -557,7 +580,7 @@
           <h3>Versionamento & Idiomas</h3>
           <div class="chip-row">
             <span class="chip core">Git & GitHub</span><span class="chip">Ambientes virtuais</span>
-            <span class="chip">Inglês intermediário</span><span class="chip">Espanhol básico</span>
+            <span class="chip">Inglês intermediário (B1)</span>
           </div>
         </div>
       </div>
@@ -577,7 +600,7 @@
           <div class="cred-list">
             <div class="cred">
               <div><h3>Engenharia Química</h3><p>UFVJM</p></div>
-              <span class="when">2023–2026</span>
+              <span class="when">2023 – dez/2026 (previsão)</span>
             </div>
             <div class="cred">
               <div><h3>Bacharelado em Ciência e Tecnologia</h3><p>UFVJM</p></div>
@@ -588,21 +611,27 @@
         <div>
           <p class="col-title">Certificações</p>
           <div class="cred-list">
-            <div class="cred">
-              <div><h3>Lean Six Sigma Yellow Belt</h3><p>Projeto de governança de ordens de serviço · Alpargatas</p></div>
-              <span class="when">2025</span>
-            </div>
-
-            <!--
-              NOVAS CERTIFICAÇÕES: copie o bloco abaixo, tire do comentário e preencha.
-              Se tiver link de verificação (Credly, Microsoft Learn etc.), troque o <div class="cred"> por
-              <a class="cred" href="LINK" target="_blank" rel="noopener"> ... </a>
-
-            <div class="cred">
-              <div><h3>Nome da certificação</h3><p>Instituição emissora</p></div>
+            <!-- Os PDFs ficam na pasta "certificados/" do repositório, com estes nomes exatos. -->
+            <a class="cred" href="certificados/python-comunidade-ds.pdf" target="_blank" rel="noopener">
+              <div><h3>Programação em Python</h3><p>Comunidade DS</p><span class="see">Ver certificado ↗</span></div>
               <span class="when">2026</span>
-            </div>
-            -->
+            </a>
+            <a class="cred" href="certificados/sql-comunidade-ds.pdf" target="_blank" rel="noopener">
+              <div><h3>Programação em SQL</h3><p>Comunidade DS</p><span class="see">Ver certificado ↗</span></div>
+              <span class="when">2026</span>
+            </a>
+            <a class="cred" href="certificados/git-github-comunidade-ds.pdf" target="_blank" rel="noopener">
+              <div><h3>Fundamentos de Git e GitHub</h3><p>Comunidade DS</p><span class="see">Ver certificado ↗</span></div>
+              <span class="when">2026</span>
+            </a>
+            <a class="cred" href="certificados/ambientes-virtuais-comunidade-ds.pdf" target="_blank" rel="noopener">
+              <div><h3>Ambientes Virtuais em Python</h3><p>Comunidade DS</p><span class="see">Ver certificado ↗</span></div>
+              <span class="when">2026</span>
+            </a>
+            <a class="cred" href="certificados/yellow-belt-fm2s.pdf" target="_blank" rel="noopener">
+              <div><h3>Lean Six Sigma Yellow Belt</h3><p>FM2S · projeto de governança de ordens de serviço na Alpargatas</p><span class="see">Ver certificado ↗</span></div>
+              <span class="when">2025</span>
+            </a>
           </div>
         </div>
       </div>
@@ -617,12 +646,12 @@
           <div>
             <div class="eyebrow" style="color:#5FD3C7;">Contato</div>
             <h2>Vamos conversar sobre a próxima vaga?</h2>
-            <p>Estou aberto a oportunidades em Análise e Ciência de Dados, remotas ou presenciais em Montes Claros – MG.</p>
+            <p>Estou aberto a oportunidades em Análise de Dados, remotas ou presenciais em Montes Claros – MG.</p>
           </div>
           <div class="contact-list">
             <a href="mailto:igorsamendes13@gmail.com"><span class="k">E-mail</span> igorsamendes13@gmail.com</a>
             <a href="https://wa.me/5538984088376" target="_blank" rel="noopener"><span class="k">WhatsApp</span> (38) 98408-8376</a>
-            <a href="https://www.linkedin.com/in/igor-mendes-a50550239" target="_blank" rel="noopener"><span class="k">LinkedIn</span> linkedin.com/in/igor-mendes-a50550239</a>
+            <a href="https://www.linkedin.com/in/igor-mendes-a50550239/" target="_blank" rel="noopener"><span class="k">LinkedIn</span> linkedin.com/in/igor-mendes-a50550239</a>
             <a href="https://github.com/Ig0rMendes" target="_blank" rel="noopener"><span class="k">GitHub</span> github.com/Ig0rMendes</a>
             <div><span class="k">Local</span> Montes Claros – MG · remoto ou presencial</div>
           </div>
