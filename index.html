@@ -520,7 +520,56 @@
           </div>
         </div>
       </article>
-
+      
+      <!-- PROJETO: ADVENTUREWORKS -->
+      <article class="case" style="margin-top:24px;">
+        <a class="case-image" href="https://youtu.be/S4QGLxKrsxc" target="_blank" rel="noopener">
+          <img src="images/projetos/adventureworks-painel.jpg" alt="Resumo executivo do painel de vendas, rentabilidade e clientes do AdventureWorks" loading="lazy">
+          <span class="live"><i></i> demonstração em vídeo</span>
+        </a>
+        <div class="case-body">
+          <div class="case-col">
+          <div>
+            <h3>Vendas, Rentabilidade e Clientes</h3>
+            <p class="sub">O que vende, o que rende e quem compra, do dado bruto ao painel, com SQL Server e Power BI.</p>
+          </div>
+          <div class="case-block">
+            <span class="label">Problema</span>
+            <p>A receita total diz pouco. Sem separar produto, território e cliente, não dá para saber de onde vem o crescimento nem onde há risco de concentração.</p>
+          </div>
+          <div class="case-block">
+            <span class="label">Solução</span>
+            <p>Modelo estrela em <strong>SQL Server</strong> (6 dimensões e 2 fatos), com diagnóstico, limpeza e validação de cada tabela, e painel de <strong>5 páginas no Power BI</strong> com resumo executivo. Segmentação <strong>RFM de 17,4 mil clientes</strong> e cada medida DAX conferida contra a consulta SQL equivalente.</p>
+          </div>
+          <div class="case-block">
+            <span class="label">Recomendações ao negócio</span>
+            <ul class="recs">
+              <li>Reativar o segmento <strong>Em Risco</strong>: 10% dos clientes, 24% da receita, cerca de 248 dias sem comprar.</li>
+              <li>Reduzir a dependência de poucos produtos e territórios: seis variações da Mountain-200 somam <strong>28,8%</strong> da receita.</li>
+              <li>Entender o salto de jul/2021 antes de projetar crescimento.</li>
+            </ul>
+          </div>
+          </div>
+          <div class="case-col">
+          <span class="case-block"><span class="label">Principais resultados</span></span>
+          <div class="case-result">
+            <div><b>3,1×</b><span>receita do 1º semestre de 2022 contra o de 2021, a partir de um salto em jul/2021 que os dados não explicam</span></div>
+            <div><b>94,9%</b><span>da receita vem de Bikes</span></div>
+            <div><b>66%</b><span>dos clientes compraram uma única vez; 34% geram 72% da receita</span></div>
+            <div><b>41,97%</b><span>de margem bruta, de 41,1% em Bikes a 62,8% em Accessories</span></div>
+          </div>
+          <div class="case-tools">
+            <span class="tag">SQL Server</span><span class="tag">T-SQL</span><span class="tag">Power BI</span>
+            <span class="tag">DAX</span><span class="tag">DBeaver</span><span class="tag">RFM</span>
+          </div>
+          <p class="case-note"><b>Ressalva:</b> dataset público de exemplo (AdventureWorks). A receita usa o preço de tabela atual, sem descontos, e as recomendações não foram aplicadas em uma operação real.</p>
+          <div class="case-actions">
+            <a class="btn btn-primary" href="https://youtu.be/S4QGLxKrsxc" target="_blank" rel="noopener">Ver demonstração</a>
+            <a class="btn btn-ghost" href="https://github.com/Ig0rMendes/adventureworks-sql-powerbi" target="_blank" rel="noopener">Ver código</a>
+          </div>
+          </div>
+        </div>
+      </article>
       <!--
         MODELO PARA NOVOS PROJETOS: copie o bloco <article class="case"> acima,
         troque a imagem (salve em images/projetos/), textos, números, ferramentas e links.
