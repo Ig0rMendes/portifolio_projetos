@@ -212,6 +212,18 @@
   .paper-link{ display:inline-flex; align-items:center; gap:6px; margin-top:14px; font-size:14px; font-weight:600; color:var(--accent-dark); }
   .paper-link:hover{ text-decoration:underline; }
 
+  /* cabeçalho de cada projeto + linha divisória entre projetos */
+  .project + .project{ margin-top:64px; padding-top:64px; border-top:1px solid var(--line); }
+  .project-head{ max-width:720px; margin-bottom:24px; }
+  .project-head .num{
+    font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600;
+    text-transform:uppercase; letter-spacing:.06em; color:var(--accent-dark);
+    display:flex; align-items:center; gap:10px; margin-bottom:10px;
+  }
+  .project-head .num::before{ content:""; width:22px; height:2px; background:var(--accent); display:inline-block; }
+  .project-head h3{ font-size:30px; letter-spacing:-.01em; margin-bottom:8px; }
+  .project-head .sub{ font-size:16px; color:var(--ink-soft); margin:0; }
+
   .coming{
     margin-top:24px; border:1.5px dashed #C9D3E0; border-radius:14px;
     padding:22px 26px; display:flex; align-items:center; gap:14px;
@@ -283,6 +295,8 @@
     nav.links{ display:none; }
   }
   @media (max-width:600px){
+    .project + .project{ margin-top:48px; padding-top:48px; }
+    .project-head h3{ font-size:24px; }
     section{ padding:64px 0; }
     .wrap{ padding:0 16px; }
     #hero h1{ font-size:34px; }
@@ -470,6 +484,12 @@
       </div>
 
       <!-- PROJETO: DELIVERY -->
+      <div class="project">
+      <div class="project-head">
+        <span class="num">Projeto 01 · Python · Streamlit</span>
+        <h3>Inteligência de Entregas</h3>
+        <p class="sub">Onde o tempo de entrega se perde em uma operação de delivery e quanto vale recuperá-lo.</p>
+      </div>
       <article class="case">
         <a class="case-image" href="https://cury-delivery-analytics-ghijfz5ndwznvpqbqn6nux.streamlit.app/" target="_blank" rel="noopener">
           <img src="images/projetos/delivery-painel.jpg" alt="Tela inicial do painel Inteligência de Entregas" loading="lazy">
@@ -477,10 +497,6 @@
         </a>
         <div class="case-body">
           <div class="case-col">
-          <div>
-            <h3>Inteligência de Entregas</h3>
-            <p class="sub">Onde o tempo de entrega se perde em uma operação de delivery e quanto vale recuperá-lo.</p>
-          </div>
           <div class="case-block">
             <span class="label">Problema</span>
             <p>A empresa acompanhava só médias de tempo, que misturam trânsito, clima, distância e desempenho do entregador. Sem isso separado, não dava para saber por onde começar.</p>
@@ -520,19 +536,22 @@
           </div>
         </div>
       </article>
-      
+      </div>
+
       <!-- PROJETO: ADVENTUREWORKS -->
-      <article class="case" style="margin-top:24px;">
+      <div class="project">
+      <div class="project-head">
+        <span class="num">Projeto 02 · SQL Server · Power BI</span>
+        <h3>Vendas, Rentabilidade e Clientes</h3>
+        <p class="sub">O que vende, o que rende e quem compra, do dado bruto ao painel, com SQL Server e Power BI.</p>
+      </div>
+      <article class="case">
         <a class="case-image" href="https://youtu.be/S4QGLxKrsxc" target="_blank" rel="noopener">
           <img src="images/projetos/adventureworks-painel.jpg.png" alt="Resumo executivo do painel de vendas, rentabilidade e clientes do AdventureWorks" loading="lazy">
           <span class="live"><i></i> demonstração em vídeo</span>
         </a>
         <div class="case-body">
           <div class="case-col">
-          <div>
-            <h3>Vendas, Rentabilidade e Clientes</h3>
-            <p class="sub">O que vende, o que rende e quem compra, do dado bruto ao painel, com SQL Server e Power BI.</p>
-          </div>
           <div class="case-block">
             <span class="label">Problema</span>
             <p>A receita total diz pouco. Sem separar produto, território e cliente, não dá para saber de onde vem o crescimento nem onde há risco de concentração.</p>
@@ -570,10 +589,13 @@
           </div>
         </div>
       </article>
+      </div>
+
       <!--
-        MODELO PARA NOVOS PROJETOS: copie o bloco <article class="case"> acima,
-        troque a imagem (salve em images/projetos/), textos, números, ferramentas e links.
-        Separe os cards com um espaço (ex.: style="margin-top:24px;" no novo <article>).
+        MODELO PARA NOVOS PROJETOS: copie um bloco <div class="project"> inteiro (cabeçalho + card)
+        e cole depois do último projeto. Troque número ("Projeto 03"), ferramentas, título, subtítulo,
+        imagem (salve em images/projetos/), textos, números e links.
+        A linha divisória entre projetos é automática.
       -->
     </div>
   </section>
