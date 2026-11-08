@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Novo Nordisk · Estudo de caso | Igor Mendes</title>
+<meta name="description" content="Estudo de caso do estágio de Igor Mendes na Novo Nordisk: dashboards, aplicativos, automações e chatbot com IA para o Controle de Qualidade Microbiológico." />
+<meta property="og:title" content="Novo Nordisk · Estudo de caso | Igor Mendes" />
+<meta property="og:description" content="Dashboards, aplicativos e automações que trouxeram previsibilidade ao laboratório. Telas recriadas com dados fictícios." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2310203D'/%3E%3Ctext x='32' y='41' font-family='Arial, sans-serif' font-weight='700' font-size='24' fill='white' text-anchor='middle'%3EIM%3C/text%3E%3Ccircle cx='49' cy='15' r='5' fill='%230E9C90'/%3E%3C/svg%3E">
+<script>
+  try {
+    if ((new URLSearchParams(location.search).get("lang") || localStorage.getItem("idioma")) === "en") {
+      document.documentElement.classList.add("i18n-loading");
+      setTimeout(() => document.documentElement.classList.remove("i18n-loading"), 1500);
+    }
+  } catch (e) {}
+</script>
+<style>
+  /* Mesmos tokens do portfólio (index.html) */
+  :root{
+    --bg:#F4F7FA; --surface:#FFFFFF; --ink:#10203D; --ink-soft:#4C5B76; --ink-faint:#7A879D; --line:#E1E7EF;
+    --accent:#0E9C90; --accent-dark:#0A7A70; --accent-soft:#E1F4F1; --accent-2:#D9730D; --accent-2-soft:#FDECD9;
+    --bad:#C2453B; --bad-soft:#FBE4E1;
+    --s1:#10203D; --s2:#3D6A9E; --s3:#0E9C90; --s4:#7FCFC5; --s5:#D9730D;
+  }
+  *{ box-sizing:border-box; }
+  html, body{ margin:0; height:100%; }
+  body{ background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3{ font-family:'Space Grotesk',sans-serif; margin:0; line-height:1.12; color:var(--ink); }
+  p{ margin:0; }
+  ul{ margin:0; padding:0; list-style:none; }
+  a{ color:inherit; text-decoration:none; }
+  .i18n-loading body{ visibility:hidden; }
+
+  /* ---------- BARRA SUPERIOR ---------- */
+  .topbar{
+    position:fixed; inset:0 0 auto 0; z-index:20; height:60px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px; padding:0 28px;
+    background:rgba(244,247,250,.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);
+  }
+  .back{ font-size:14px; font-weight:600; color:var(--ink-soft); display:flex; align-items:center; gap:8px; }
+  .back:hover{ color:var(--ink); }
+  .deck-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px; }
+  .deck-title span{ color:var(--accent); }
+  .top-right{ display:flex; align-items:center; gap:14px; }
+  .counter{ font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--ink-faint); min-width:52px; text-align:right; }
+  .lang-switch{ display:flex; gap:2px; padding:3px; border:1px solid var(--line); border-radius:10px; background:var(--surface); }
+  .lang-switch button{
+    font-family:'JetBrains Mono',monospace; font-size:12px; font-weight:600; letter-spacing:.06em;
+    padding:6px 10px; border:0; border-radius:7px; background:transparent; color:var(--ink-faint); cursor:pointer;
+  }
+  .lang-switch button[aria-pressed="true"]{ background:var(--ink); color:#fff; }
+  .lang-switch button:focus-visible, .nav-btn:focus-visible, .tabs button:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  /* ---------- SLIDES ---------- */
+  .deck{ height:100%; overflow-y:auto; scroll-snap-type:y mandatory; scroll-behavior:smooth; }
+  .slide{
+    min-height:100vh; scroll-snap-align:start; padding:92px 64px 72px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .slide:nth-child(even){ background:var(--surface); }
+  .inner{ width:100%; max-width:1120px; margin:0 auto; }
+  .kicker{
+    font-family:'JetBrains Mono',monospace; font-size:12.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--accent-dark); font-weight:600; display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .kicker::before{ content:""; width:22px; height:2px; background:var(--accent); }
+  .slide h2{ font-size:38px; letter-spacing:-.01em; margin-bottom:14px; max-width:820px; }
+  .slide h2 em{ font-style:normal; color:var(--accent-dark); }
+  .lead{ font-size:17px; color:var(--ink-soft); max-width:760px; }
+  .split{ display:grid; grid-template-columns:.9fr 1.1fr; gap:48px; align-items:center; margin-top:34px; }
+
+  .psr{ display:grid; gap:16px; }
+  .psr > div{ border-left:3px solid var(--line); padding-left:16px; }
+  .psr .label{ font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint); font-weight:600; display:block; margin-bottom:4px; }
+  .psr p{ font-size:15px; color:var(--ink-soft); }
+  .psr p strong{ color:var(--ink); }
+  .psr .res{ border-left-color:var(--accent-2); }
+  .psr .res .label{ color:var(--accent-2); }
+
+  /* Cartão de tela recriada */
+  .screen{ background:var(--surface); border:1px solid var(--line); border-radius:16px; box-shadow:0 30px 60px -36px rgba(16,32,61,.45); overflow:hidden; }
+  .slide:nth-child(even) .screen{ background:var(--bg); }
+  .screen-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 18px; border-bottom:1px solid var(--line); }
+  .screen-head b{ font-family:'Space Grotesk',sans-serif; font-size:15px; }
+  .screen-body{ padding:18px; }
+  .fict{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.04em; color:var(--ink-faint); background:var(--bg); border:1px dashed #C9D3E0; padding:3px 8px; border-radius:6px; white-space:nowrap; }
+  .slide:nth-child(even) .fict{ background:var(--surface); }
+  .legend{ display:flex; flex-wrap:wrap; gap:14px; font-size:12.5px; color:var(--ink-soft); margin-top:12px; }
+  .legend i{ display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:6px; vertical-align:-1px; }
+
+  /* Abas */
+  .tabs{ display:flex; gap:4px; }
+  .tabs button{ font:inherit; font-size:12.5px; font-weight:600; padding:6px 11px; border-radius:8px; border:1px solid var(--line); background:transparent; color:var(--ink-soft); cursor:pointer; }
+  .tabs button[aria-selected="true"]{ background:var(--ink); border-color:var(--ink); color:#fff; }
+
+  /* Colunas 100% empilhadas */
+  .cols100{ display:flex; align-items:flex-end; gap:8px; height:210px; }
+  .cols100 .c{ flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; height:100%; }
+  .cols100 .bar{ flex:1; width:100%; display:flex; flex-direction:column; border-radius:5px; overflow:hidden; }
+  .cols100 .bar .out{ background:var(--bad); }
+  .cols100 .bar .in{ background:var(--accent); flex:1; }
+  .cols100 .m{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink-faint); }
+  .cols100 .v{ font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--ink-soft); }
+  .tabpanel[hidden]{ display:none; }
+
+  /* Barras horizontais empilhadas */
+  .hstack{ display:grid; gap:16px; }
+  .hrow .name{ font-size:13px; font-weight:600; margin-bottom:6px; display:flex; justify-content:space-between; }
+  .hrow .name span{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-faint); font-weight:500; }
+  .htrack{ position:relative; display:flex; height:30px; border-radius:6px; overflow:hidden; background:var(--line); }
+  .htrack > div{ height:100%; }
+  .sla{ position:absolute; top:-4px; bottom:-4px; width:2px; background:var(--accent-2); }
+  .sla-wrap{ position:relative; }
+  .sla-tag{ position:absolute; top:-20px; transform:translateX(-50%); font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--accent-2); white-space:nowrap; }
+
+  /* Semana */
+  .week{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+  .day{ border:1px solid var(--line); border-radius:10px; padding:10px 6px; text-align:center; min-height:96px; background:var(--surface); display:flex; flex-direction:column; gap:6px; align-items:center; }
+  .slide:nth-child(even) .day{ background:var(--bg); }
+  .day b{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-faint); }
+  .day.off{ background:repeating-linear-gradient(135deg, transparent 0 6px, rgba(122,135,157,.08) 6px 12px); }
+  .pill{ font-size:11px; font-weight:600; padding:3px 7px; border-radius:999px; line-height:1.3; }
+  .pill.inc{ background:#E3ECF7; color:var(--s2); }
+  .pill.ok{ background:var(--accent-soft); color:var(--accent-dark); }
+  .pill.bad{ background:var(--bad-soft); color:var(--bad); }
+  .weeks{ display:grid; gap:18px; }
+  .wk-label{ font-size:13px; font-weight:600; margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+
+  /* Números de impacto */
+  .stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:34px; }
+  .stats.three{ grid-template-columns:repeat(3,1fr); }
+  .stat{ background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:20px; }
+  .slide:nth-child(even) .stat{ background:var(--bg); }
+  .stat b{ display:block; font-family:'JetBrains Mono',monospace; font-size:30px; color:var(--accent-2); line-height:1.1; margin-bottom:6px; }
+  .stat span{ font-size:13.5px; color:var(--ink-soft); }
+  .grid8{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:22px; }
+  .item{ border:1px solid var(--line); border-radius:12px; padding:14px 16px; background:var(--surface); }
+  .item small{ display:block; font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent-dark); margin-bottom:4px; letter-spacing:.04em; }
+  .item p{ font-size:14px; font-weight:600; line-height:1.35; }
+
+  /* Placas */
+  .today{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  .slot{ border:1px solid var(--line); border-radius:12px; padding:12px; background:var(--surface); }
+  .slot b{ display:block; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--ink-faint); }
+  .slot strong{ display:block; font-family:'JetBrains Mono',monospace; font-size:26px; color:var(--ink); line-height:1.2; }
+  .slot span{ font-size:12px; color:var(--ink-soft); }
+  .total{ display:flex; align-items:baseline; gap:10px; margin-bottom:14px; }
+  .total strong{ font-family:'JetBrains Mono',monospace; font-size:40px; color:var(--accent-dark); line-height:1; }
+  .total span{ font-size:14px; color:var(--ink-soft); }
+  .next{ margin-top:16px; display:grid; gap:10px; }
+  .next .hrow .htrack{ height:22px; }
+
+  /* Antes e depois */
+  .ba{ display:grid; grid-template-columns:1fr; gap:10px; }
+  .ba .arrow{ transform:rotate(90deg); justify-self:center; line-height:1; }
+  .raw{ font-family:'JetBrains Mono',monospace; font-size:11.5px; line-height:1.8; color:var(--ink-soft); background:#0F1B30; color:#9FB2CC; border-radius:12px; padding:14px; }
+  .raw .h{ color:#5FD3C7; }
+  .arrow{ font-size:26px; color:var(--accent); }
+  table.tbl{ width:100%; border-collapse:collapse; font-size:12.5px; }
+  .tbl th{ text-align:left; font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-faint); font-weight:600; padding:6px 8px; border-bottom:1px solid var(--line); }
+  .tbl td{ padding:7px 8px; border-bottom:1px solid var(--line); }
+  .tbl td:last-child, .tbl th:last-child{ text-align:right; font-family:'JetBrains Mono',monospace; }
+  .tbl tfoot td{ font-weight:700; border-bottom:0; }
+
+  /* Chat */
+  .chat{ display:grid; gap:12px; }
+  .msg{ max-width:88%; padding:12px 14px; border-radius:14px; font-size:13.5px; }
+  .msg.user{ justify-self:end; background:var(--ink); color:#fff; border-bottom-right-radius:4px; }
+  .msg.bot{ background:var(--accent-soft); color:var(--ink); border-bottom-left-radius:4px; }
+  .msg.bot ol{ margin:6px 0 0; padding-left:18px; }
+  .refs{ margin-top:10px; padding-top:8px; border-top:1px solid #BFE5DF; font-size:12px; color:var(--accent-dark); }
+  .refs b{ font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.04em; }
+
+  /* Fluxo */
+  .flow{ display:grid; grid-template-columns:repeat(5,1fr); gap:10px; }
+  .step{ position:relative; border:1px solid var(--line); border-radius:12px; padding:14px 12px; background:var(--surface); }
+  .slide:nth-child(even) .step{ background:var(--bg); }
+  .step .n{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--accent-dark); font-weight:600; }
+  .step p{ font-size:13px; font-weight:600; margin-top:4px; line-height:1.35; }
+  .step small{ display:block; font-size:12px; color:var(--ink-soft); margin-top:4px; }
+  .step:not(:last-child)::after{ content:"→"; position:absolute; right:-11px; top:50%; transform:translateY(-50%); color:var(--accent); font-weight:700; z-index:1; }
+  .note{ margin-top:18px; background:var(--accent-2-soft); border-radius:12px; padding:14px 16px; font-size:14px; color:#7A3F06; }
+
+  /* Mini painel TV e aniversariantes */
+  .duo{ display:grid; grid-template-columns:1.2fr .8fr; gap:16px; }
+  .tv{ background:#0F1B30; border-radius:14px; padding:14px; }
+  .tv-grid{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .tv-card{ background:#17284A; border-radius:8px; padding:10px; color:#C9D6EA; font-size:11.5px; }
+  .tv-card b{ display:block; color:#fff; font-size:12px; margin-bottom:6px; }
+  .spark{ display:flex; align-items:flex-end; gap:3px; height:42px; }
+  .spark i{ flex:1; background:#5FD3C7; border-radius:2px; }
+  .tv-dots{ display:flex; gap:5px; justify-content:center; margin-top:10px; }
+  .tv-dots i{ width:6px; height:6px; border-radius:50%; background:#3A4F75; }
+  .tv-dots i:first-child{ background:#5FD3C7; }
+  .bday li{ display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line); font-size:13.5px; }
+  .bday li span:last-child{ font-family:'JetBrains Mono',monospace; color:var(--ink-faint); font-size:12.5px; }
+
+  /* Fechamento */
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:22px; }
+  .chip{ font-size:13px; font-weight:600; padding:7px 12px; border-radius:999px; background:var(--surface); border:1px solid var(--line); }
+  .lessons{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:28px; }
+  .lesson{ border-top:3px solid var(--accent); padding-top:12px; }
+  .lesson b{ display:block; font-family:'Space Grotesk',sans-serif; font-size:18px; margin-bottom:6px; }
+  .lesson p{ font-size:14.5px; color:var(--ink-soft); }
+  .cta{ display:flex; gap:12px; margin-top:34px; flex-wrap:wrap; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; padding:12px 20px; border-radius:10px; font-weight:600; font-size:15px; border:1px solid transparent; }
+  .btn-primary{ background:var(--ink); color:#fff; }
+  .btn-ghost{ border-color:var(--line); }
+
+  /* Capa */
+  .cover h1{ font-size:58px; letter-spacing:-.02em; margin:6px 0 18px; max-width:900px; }
+  .cover h1 em{ font-style:normal; color:var(--accent-dark); background:linear-gradient(180deg, transparent 62%, var(--accent-soft) 62%); }
+  .meta{ display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
+  .meta span{ font-size:13.5px; padding:7px 12px; border-radius:999px; background:var(--surface); border:1px solid var(--line); color:var(--ink-soft); }
+  .disclaimer{ margin-top:30px; display:flex; gap:10px; align-items:flex-start; max-width:720px; font-size:13.5px; color:var(--ink-soft); background:var(--surface); border:1px dashed #C9D3E0; border-radius:12px; padding:12px 14px; }
+  .hint{ margin-top:36px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-faint); }
+
+  /* ---------- NAVEGAÇÃO ---------- */
+  .dots{ position:fixed; right:22px; top:50%; transform:translateY(-50%); z-index:15; display:grid; gap:8px; }
+  .dots button{ width:9px; height:9px; padding:0; border-radius:50%; border:0; background:#C9D3E0; cursor:pointer; }
+  .dots button[aria-current="true"]{ background:var(--accent); transform:scale(1.3); }
+  .nav-btns{ position:fixed; right:22px; bottom:20px; z-index:15; display:flex; gap:8px; }
+  .nav-btn{ width:40px; height:40px; border-radius:10px; border:1px solid var(--line); background:var(--surface); color:var(--ink); font-size:18px; cursor:pointer; box-shadow:0 8px 20px -12px rgba(16,32,61,.4); }
+  .nav-btn:disabled{ opacity:.35; cursor:default; }
+
+  /* ---------- RESPONSIVO ---------- */
+  @media (max-width:960px){
+    .slide{ padding:84px 28px 64px; min-height:auto; }
+    .deck{ scroll-snap-type:none; }
+    .split, .duo{ grid-template-columns:1fr; gap:28px; }
+    .stats, .grid8{ grid-template-columns:1fr 1fr; }
+    .stats.three{ grid-template-columns:1fr; }
+    .flow{ grid-template-columns:1fr; }
+    .step:not(:last-child)::after{ content:"↓"; right:auto; left:50%; top:auto; bottom:-14px; transform:translateX(-50%); }
+    .lessons{ grid-template-columns:1fr; }
+    .dots, .deck-title{ display:none; }
+    .cover h1{ font-size:42px; }
+    .slide h2{ font-size:30px; }
+  }
+  @media (max-width:600px){
+    .topbar{ padding:0 14px; }
+    .slide{ padding:80px 16px 56px; }
+    .counter{ display:none; }
+    .today{ grid-template-columns:1fr 1fr; }
+    .week{ gap:3px; }
+    .day{ padding:8px 2px; min-height:88px; }
+    .pill{ font-size:9.5px; padding:2px 4px; }
+    .cols100{ gap:4px; }
+    .cols100 .v{ display:none; }
+    .cover h1{ font-size:34px; }
+    .slide h2{ font-size:26px; }
+    .stat b{ font-size:24px; }
+    .tabs button{ padding:5px 8px; font-size:12px; }
+    .screen-head{ flex-wrap:wrap; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="back" href="index.html#experiencia">← Portfólio</a>
+  <div class="deck-title">Novo Nordisk<span>.</span> Estudo de caso</div>
+  <div class="top-right">
+    <span class="counter" aria-live="polite" translate="no"><span id="cur">1</span> / <span id="tot">12</span></span>
+    <div class="lang-switch" role="group" aria-label="Idioma / Language" translate="no">
+      <button type="button" data-lang="pt" aria-pressed="true" lang="pt-BR" title="Português">PT</button>
+      <button type="button" data-lang="en" aria-pressed="false" lang="en" title="English">EN</button>
+    </div>
+  </div>
+</header>
+
+<nav class="dots" aria-label="Slides" translate="no"></nav>
+<div class="nav-btns" translate="no">
+  <button class="nav-btn" id="prev" type="button" aria-label="Anterior">↑</button>
+  <button class="nav-btn" id="next" type="button" aria-label="Próximo">↓</button>
+</div>
+
+<main class="deck" id="deck">
+
+  <!-- 1. CAPA -->
+  <section class="slide cover">
+    <div class="inner">
+      <div class="kicker">Estudo de caso · Estágio</div>
+      <h1>Dados que trouxeram <em>previsibilidade</em> ao laboratório.</h1>
+      <p class="lead">Dashboards, aplicativos, automações e um chatbot com IA que desenvolvi no Controle de Qualidade Microbiológico da Novo Nordisk para reduzir atrasos, eliminar retrabalho manual e organizar a rotina da equipe.</p>
+      <div class="meta">
+        <span>Estagiário · CQ Microbiológico e Supply Chain</span>
+        <span>jul/2025 – atual</span>
+        <span>Montes Claros – MG</span>
+      </div>
+      <div class="disclaimer"><span aria-hidden="true">ⓘ</span><p>As telas desta apresentação são <strong>recriações ilustrativas com dados fictícios</strong>, feitas por mim para mostrar o conceito de cada entrega. Nenhum dado, tela ou documento interno da empresa é exibido.</p></div>
+      <p class="hint">Role para baixo ou use as setas do teclado →</p>
+    </div>
+  </section>
+
+  <!-- 2. VISÃO GERAL -->
+  <section class="slide">
+    <div class="inner">
+      <div class="kicker">Visão geral</div>
+      <h2>Oito entregas, um objetivo: <em>saber antes o que vai acontecer</em>.</h2>
+      <p class="lead">Todos os dashboards são usados nas reuniões diárias do time para mostrar como está o dia e direcionar as ações.</p>
+      <div class="stats">
+        <div class="stat"><b>−35%</b><span>de atrasos na entrega das análises</span></div>
+        <div class="stat"><b>40 min</b><span>poupados por dia na rotina de coleta de água</span></div>
+        <div class="stat"><b>~2,5 h</b><span>por mês sem preencher planilhas de descarte</span></div>
+        <div class="stat"><b>0</b><span>registros em papel no controle de descarte</span></div>
+      </div>
+      <div class="grid8">
+        <div class="item"><small>01 · Power BI</small><p>Correção do dashboard de Timeliness</p></div>
+        <div class="item"><small>02 · Power BI</small><p>Dashboard de Lead Time das análises</p></div>
+        <div class="item"><small>03 · Processo</small><p>Regras para finalizar sem trabalho no fim de semana</p></div>
+        <div class="item"><small>04 · Power BI</small><p>Previsão de contagem de placas</p></div>
+        <div class="item"><small>05 · Power Apps</small><p>App de coletas de água</p></div>
+        <div class="item"><small>06 · IA generativa</small><p>Chatbot de procedimentos de coleta</p></div>
+        <div class="item"><small>07 · Power Apps</small><p>App de descarte de carpules</p></div>
+        <div class="item"><small>08 · Power BI</small><p>Acompanhamento de re-runs</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. TIMELINESS -->
+  <section class="slide">
+    <div class="inner">
+      <div class="kicker">01 · Timeliness</div>
+      <h2>Corrigir a régua antes de <em>medir o prazo</em>.</h2>
+      <div class="split">
+        <div class="psr">
+          <div><span class="label">Problema</span><p>O dashboard de Timeliness mostra, mês a mês, quantas análises de insulina saem dentro ou fora do prazo. Para um tipo de amostra, ele usava a <strong>coluna errada como tempo inicial</strong>, e o prazo era contado a partir do momento errado.</p></div>
+          <div><span class="label">Solução</span><p>Relacionei a tabela do Controle de Qualidade com a da <strong>produção</strong> no modelo de dados, para que a contagem daquela amostra começasse no tempo correto.</p></div>
+          <div class="res"><span class="label">Resultado</span><p>Um indicador confiável para as 3 análises, base para todas as melhorias de prazo que vieram depois.</p></div>
+        </div>
+        <div class="screen">
+          <div class="screen-head">
+            <b>Timeliness por mês</b>
+            <div class="tabs" role="tablist" aria-label="Análise">
+              <button type="button" role="tab" aria-selected="true" data-tab="tA">Análise A</button>
+              <button type="button" role="tab" aria-selected="false" data-tab="tB">Análise B</button>
+              <button type="button" role="tab" aria-selected="false" data-tab="tC">Análise C</button>
+            </div>
+          </div>
+          <div class="screen-body">
+            <div class="tabpanel" id="tA"><div class="cols100" data-in="78,81,80,86,88,90,91,93,92,95"></div></div>
+            <div class="tabpanel" id="tB" hidden><div class="cols100" data-in="70,72,75,79,84,86,89,90,93,94"></div></div>
+            <div class="tabpanel" id="tC" hidden><div class="cols100" data-in="82,80,85,87,86,90,92,91,94,96"></div></div>
+            <div class="legend"><span><i style="background:var(--accent)"></i>Dentro do prazo</span><span><i style="background:var(--bad)"></i>Fora do prazo</span><span class="fict">dados fictícios</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. LEAD TIME -->
+  <section class="slide">
+    <div class="inner">
+      <div class="kicker">02 · Lead Time</div>
+      <h2>Entender o processo inteiro para ver <em>onde o tempo vai</em>.</h2>
+      <div class="split">
+        <div class="psr">
+          <div><span class="label">Necessidade</span><p>Duas das análises têm <strong>tempo de incubação</strong> e só podem ser finalizadas depois dele. Sem separar as etapas, não dava para saber onde o tempo era gasto.</p></div>
+          <div><span class="label">Solução</span><p>Mapeei o processo de cada análise e busquei os dados com a especialista em dados do setor. Cada etapa é calculada pela <strong>diferença entre as datas</strong> de uma etapa e da seguinte, com regras para os prazos e as condições específicas de cada análise.</p></div>
+          <div class="res"><span class="label">Resultado</span><p>Uma visão por etapa que mostrou os gargalos e abriu caminho para as regras de fim de semana.</p></div>
+        </div>
+        <div class="screen">
+          <div class="screen-head"><b>Lead time médio por etapa (horas)</b><span class="fict">dados fictícios</span></div>
+          <div class="screen-body">
+            <div class="hstack" id="leadtime"></div>
+            <div class="legend" id="lt-legend"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. REGRAS DE FIM DE SEMANA -->
+  <section class="slide">
+    <div class="inner">
+      <div class="kicker">03 · Regras de processo</div>
+      <h2>Previsibilidade que <em>liberou os fins de semana</em>.</h2>
+      <div class="split">
+        <div class="psr">
+          <div><span class="label">Contexto</span><p>Com a previsibilidade trazida pelo Lead Time, o setor começou a <strong>retirar o trabalho dos fins de semana</strong>. Mas uma análise cuja incubação terminasse no sábado ou no domingo ficaria fora do prazo.</p></div>
+          <div><span class="label">Solução</span><p>Estabelecemos regras: quando a incubação termina no fim de semana, a finalização é feita na <strong>segunda-feira de manhã</strong>, e o dashboard passou a considerar isso no cálculo da aderência.</p></div>
+          <div class="res"><span class="label">Resultado</span><p><strong>−35% de atrasos</strong> na entrega das análises e economia com idas ao laboratório no fim de semana.</p></div>
+        </div>
+        <div class="screen">
+          <div class="screen-head"><b>Exemplo de semana</b><span class="fict">ilustrativo</span></div>
+          <div class="screen-body weeks">
+            <div>
+              <div class="wk-label">Antes</div>
+              <div class="week">
+                <div class="day"><b>SEG</b></div>
+                <div class="day"><b>TER</b></div>
+                <div class="day"><b>QUA</b><span class="pill inc">incubação</span></div>
+                <div class="day"><b>QUI</b><span class="pill inc">incubação</span></div>
+                <div class="day"><b>SEX</b><span class="pill inc">incubação</span></div>
+                <div class="day off"><b>SÁB</b><span class="pill bad">ida extra</span></div>
+                <div class="day off"><b>DOM</b></div>
+              </div>
+            </div>
+            <div>
+              <div class="wk-label">Depois</div>
+              <div class="week">
+                <div class="day"><b>SEG</b><span class="pill ok">finaliza 8h</span></div>
+                <div class="day"><b>TER</b></div>
+                <div class="day"><b>QUA</b><span class="pill inc">incubação</span></div>
+                <div class="day"><b>QUI</b><span class="pill inc">incubação</span></div>
+                <div class="day"><b>SEX</b><span class="pill inc">incubação</span></div>
+                <div class="day off"><b>SÁB</b><span class="pill ok">sem ida</span></div>
+                <div class="day off"><b>DOM</b><span class="pill ok">sem ida</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. PLACAS -->
+  <section class="slide">
+    <div class="inner">
+      <div class="kicker">04 · Previsão de placas</div>
+      <h2>O dia inteiro em uma tela, <em>e os próximos dois também</em>.</h2>
+      <div class="split">
+        <div class="psr">
+          <div><span class="label">Problema</span><p>O dashboard de placas existia, mas era preciso selecionar dia e horário um a um para saber o que seria contado.</p></div>
+          <div><span class="label">Solução</span><p>Criei uma nova página que resume as <strong>placas do dia</strong>, os <strong>horários das contagens</strong> e a <strong>previsão dos próximos dois dias</strong>.</p></div>
+          <div class="res"><span class="label">Resultado</span><p>A página abre a reunião do time e orienta a distribuição das tarefas do dia.</p></div>
+        </div>
+        <div class="screen">
+          <div class="screen-head"><b>Contagem de placas</b><span class="fict">dados fictícios</span></div>
+          <div class="screen-body">
+            <div class="total"><strong>46</strong><span>placas para contar hoje</span></div>
+            <div class="today">
+              <div class="slot"><b>08:00</b><strong>12</strong><span>placas</span></div>
+              <div class="slot"><b>11:00</b><strong>9</strong><span>placas</span></div>
+              <div class="slot"><b>14:00</b><strong>15</strong><span>placas</span></div>
+              <div class="slot"><b>16:30</b><strong>10</strong><span>placas</span></div>
+            </div>
+            <div class="next" id="next-days"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. APP DE COLETAS -->
+  <section class="slide">
+    <div class="inner">
+      <div class="kicker">05 · App de coletas de água</div>
+      <h2>De uma lista de códigos para <em>uma rotina planejada</em>.</h2>
+      <div class="split">
+        <div class="psr">
+          <div><span class="label">Problema</span><p>Todo dia o técnico gerava no sistema a programação de coletas: dados brutos, com pontos identificados só por <strong>código</strong>, sem direcionamento.</p></div>
+          <div><span class="label">Solução</span><p>Um app em <strong>Power Apps</strong> que, com <strong>Office Scripts</strong>, transforma esses dados em uma tabela clara: o <strong>local</strong> de cada ponto, a contagem de amostras por tipo e o que o setor deve receber no dia. Também mostra o mês inteiro com antecedência.</p></div>
+          <div class="res"><span class="label">Resultado</span><p><strong>40 min poupados por dia</strong> e uma previsibilidade inédita para organizar a rotina e distribuir as tarefas.</p></div>
+        </div>
+        <div class="screen">
+          <div class="screen-head"><b>Coletas de hoje</b><span class="fict">dados fictícios</span></div>
+          <div class="screen-body">
+            <div class="ba">
+              <div class="raw" translate="no"><span class="h">PONTO · QTD · TIPO</span><br>WP-0412 · 3 · TOC<br>WP-0415 · 2 · MICRO<br>WP-0731 · 4 · MICRO<br>WP-0733 · 1 · COND<br>WP-1120 · 2 · TOC</div>
+              <div class="arrow" aria-hidden="true">→</div>
+              <table class="tbl">
+                <thead><tr><th>Local</th><th>Tipo</th><th>Amostras</th></tr></thead>
+                <tbody>
+                  <tr><td>Sala de água purificada · ponto 2</td><td>TOC</td><td>3</td></tr>
+                  <tr><td>Sala de água purificada · ponto 5</td><td>Micro</td><td>2</td></tr>
+                  <tr><td>Envase · ponto 1</td><td>Micro</td><td>4</td></tr>
+                  <tr><td>Envase · ponto 3</td><td>Condutividade</td><td>1</td></tr>
+                  <tr><td>Utilidades · ponto 7</td><td>TOC</td><td>2</td></tr>
+                </tbody>
+                <tfoot><tr><td colspan="2">Total esperado no laboratório</td><td>12</td></tr></tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. CHATBOT -->
+  <section class="slide">
+    <div class="inner">
+      <div class="kicker">06 · Chatbot com IA</div>
+      <h2>Um colega que conhece todos os procedimentos <em>e cita as fontes</em>.</h2>
+      <div class="split">
+        <div class="psr">
+          <div><span class="label">Necessidade</span><p>Com a expansão do setor, chegam novos técnicos que precisam aprender rápido como e onde coletar cada ponto.</p></div>
+          <div><span class="label">Solução</span><p>Criei um chatbot com <strong>IA generativa (Copilot)</strong> alimentado com os documentos de coleta: como coletar, onde fica cada ponto e os cuidados de cada tipo de amostra. Ele responde e <strong>indica os documentos que usou</strong>, para que a pessoa confira a fonte.</p></div>
+          <div class="res"><span class="label">Resultado</span><p>Treinamento mais rápido dos novos técnicos e respostas rastreáveis, essenciais num ambiente regulado.</p></div>
+        </div>
+        <div class="screen">
+          <div class="screen-head"><b>Assistente de coletas</b><span class="fict">exemplo fictício</span></div>
+          <div class="screen-body chat">
+            <div class="msg user">Como faço a coleta no ponto 5 da sala de água purificada?</div>
+            <div class="msg bot">O ponto 5 fica à direita do tanque de armazenamento. Para coleta microbiológica:
+              <ol><li>Higienize as mãos e calce luvas estéreis.</li><li>Deixe a água escoar por 1 minuto.</li><li>Colete sem tocar a boca do frasco e identifique a amostra.</li></ol>
+              <div class="refs"><b>FONTES</b><br>Procedimento de coleta de água, seção 4 · Mapa de pontos de coleta</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. DESCARTE DE CARPULES -->
+  <section class="slide">
+    <div class="inner">
+      <div class="kicker">07 · App de descarte de carpules</div>
+      <h2>Do logsheet escrito à mão para <em>alertas automáticos</em>.</h2>
+      <p class="lead">Carpules de insulina usados em testes do laboratório eram registrados à mão em um logsheet, e o controle de descarte exigia preencher uma planilha consultando o sistema de laboratório linha a linha.</p>
+      <div class="flow" style="margin-top:28px;">
+        <div class="step"><span class="n">1</span><p>Recebimento registrado no app</p><small>fim do logsheet em papel</small></div>
+        <div class="step"><span class="n">2</span><p>App calcula o que deve ser descartado</p><small>sem consulta manual</small></div>
+        <div class="step"><span class="n">3</span><p>Alerta automático no Teams</p><small>via Power Automate</small></div>
+        <div class="step"><span class="n">4</span><p>Descarte confirmado no app</p><small>controle de execução</small></div>
+        <div class="step"><span class="n">5</span><p>Histórico de descartes</p><small>consulta a qualquer momento</small></div>
+      </div>
+      <div class="stats three">
+        <div class="stat"><b>~2,5 h</b><span>por mês sem preencher planilha (cerca de 50 linhas × 3 min)</span></div>
+        <div class="stat"><b>0</b><span>registros em papel</span></div>
+        <div class="stat"><b>0</b><span>descartes parados por erro de preenchimento ou ausência</span></div>
+      </div>
+      <p class="note"><strong>Por que isso importa:</strong> com o registro manual, um erro de preenchimento travava o descarte até alguém corrigir. Em um caso, a pessoa que havia preenchido saiu de férias e o material ficou 20 dias sem ser descartado. Com o app, isso não acontece mais.</p>
+    </div>
+  </section>
+
+  <!-- 10. RE-RUNS -->
+  <section class="slide">
+    <div class="inner">
+      <div class="kicker">08 · Re-runs</div>
+      <h2>Quando uma análise precisa ser refeita, <em>o motivo vira dado</em>.</h2>
+      <div class="split">
+        <div class="psr">
+          <div><span class="label">Necessidade</span><p>Re-runs (análises que precisam ser feitas de novo) consomem tempo e material, mas não eram acompanhados de forma estruturada.</p></div>
+          <div><span class="label">Solução</span><p>Uma página no <strong>Power BI</strong> que contabiliza os re-runs e lista os <strong>motivos</strong>, para acompanhar tendências e responsáveis.</p></div>
+          <div class="res"><span class="label">Resultado</span><p>Visibilidade para atacar as causas mais frequentes, em vez de tratar cada caso isoladamente.</p></div>
+        </div>
+        <div class="screen">
+          <div class="screen-head"><b>Re-runs por motivo (últimos 90 dias)</b><span class="fict">dados fictícios</span></div>
+          <div class="screen-body"><div class="hstack" id="reruns"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. COMUNICAÇÃO E CULTURA -->
+  <section class="slide">
+    <div class="inner">
+      <div class="kicker">Além dos dashboards</div>
+      <h2>Dados visíveis para todos, <em>e um time mais próximo</em>.</h2>
+      <p class="lead">Criei uma página em HTML que exibe em sequência os principais dashboards do setor, e um app de aniversariantes do mês. A partir dele, implementei a festa mensal de aniversariantes: uma vez por mês, o time se reúne com bolo e salgados.</p>
+      <div class="duo" style="margin-top:28px;">
+        <div class="tv">
+          <div class="tv-grid">
+            <div class="tv-card"><b>Timeliness</b><div class="spark"><i style="height:60%"></i><i style="height:70%"></i><i style="height:66%"></i><i style="height:80%"></i><i style="height:86%"></i><i style="height:92%"></i></div></div>
+            <div class="tv-card"><b>Placas de hoje</b><div class="spark"><i style="height:50%"></i><i style="height:38%"></i><i style="height:64%"></i><i style="height:42%"></i></div></div>
+            <div class="tv-card"><b>Lead time</b><div class="spark"><i style="height:90%"></i><i style="height:84%"></i><i style="height:76%"></i><i style="height:70%"></i><i style="height:62%"></i></div></div>
+            <div class="tv-card"><b>Re-runs</b><div class="spark"><i style="height:40%"></i><i style="height:55%"></i><i style="height:35%"></i><i style="height:30%"></i><i style="height:25%"></i></div></div>
+          </div>
+          <div class="tv-dots"><i></i><i></i><i></i></div>
+        </div>
+        <div class="screen">
+          <div class="screen-head"><b>Aniversariantes de novembro</b><span class="fict">nomes fictícios</span></div>
+          <div class="screen-body">
+            <ul class="bday">
+              <li><span>Ana P.</span><span>04/11</span></li>
+              <li><span>Bruno S.</span><span>12/11</span></li>
+              <li><span>Carla M.</span><span>19/11</span></li>
+              <li><span>Diego R.</span><span>27/11</span></li>
+            </ul>
+            <p style="margin-top:12px;font-size:13px;color:var(--ink-soft);">Festa do mês: última sexta-feira, 15h</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. FECHAMENTO -->
+  <section class="slide">
+    <div class="inner">
+      <div class="kicker">O que fica</div>
+      <h2>Ferramentas e aprendizados.</h2>
+      <div class="chips">
+        <span class="chip">Power BI</span><span class="chip">DAX</span><span class="chip">Power Query</span><span class="chip">SQL Server</span>
+        <span class="chip">Power Apps</span><span class="chip">Power Automate</span><span class="chip">Office Scripts</span><span class="chip">Copilot</span>
+        <span class="chip">HTML</span><span class="chip">SAP</span><span class="chip">Global LIMS</span><span class="chip">PEMS</span>
+      </div>
+      <div class="lessons">
+        <div class="lesson"><b>Processo antes do dado</b><p>O Lead Time só funcionou porque entendi cada etapa de cada análise antes de escrever qualquer medida.</p></div>
+        <div class="lesson"><b>Previsibilidade muda a rotina</b><p>Saber antes o que vem permitiu tirar o trabalho do fim de semana e reduzir atrasos ao mesmo tempo.</p></div>
+        <div class="lesson"><b>Automatizar elimina erro</b><p>Trocar registros manuais por apps e alertas acaba com o retrabalho e com os erros que travavam o processo.</p></div>
+      </div>
+      <div class="cta">
+        <a class="btn btn-primary" href="index.html#projetos">Ver outros projetos</a>
+        <a class="btn btn-ghost" href="index.html#contato">Falar comigo</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // ---------- Gráficos (dados fictícios) ----------
+  const MESES = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out"];
+  document.querySelectorAll(".cols100").forEach((el) => {
+    const vals = el.dataset.in.split(",").map(Number);
+    el.innerHTML = vals.map((v, i) => `
+      <div class="c"><span class="v">${v}%</span>
+        <div class="bar"><div class="out" style="height:${100 - v}%"></div><div class="in"></div></div>
+        <span class="m">${MESES[i]}</span></div>`).join("");
+  });
+
+  // Lead time: etapas em horas; prazo (SLA) em horas
+  const ETAPAS = [["Recebimento","var(--s1)"],["Preparo","var(--s2)"],["Incubação","var(--s3)"],["Leitura","var(--s4)"],["Revisão e liberação","var(--s5)"]];
+  const LT = [["Análise A",[6,10,0,8,14],48],["Análise B",[5,8,72,6,12],120],["Análise C",[7,9,48,7,13],96]];
+  const MAXH = 120;
+  document.getElementById("leadtime").innerHTML = LT.map(([nome, horas, sla]) => {
+    const total = horas.reduce((a, b) => a + b, 0);
+    return `<div class="hrow"><div class="name">${nome}<span>${total} h · prazo ${sla} h</span></div>
+      <div class="sla-wrap"><div class="htrack">${horas.map((h, i) => h ? `<div style="width:${h / MAXH * 100}%;background:${ETAPAS[i][1]}"></div>` : "").join("")}</div>
+      <div class="sla" style="left:${sla / MAXH * 100}%"></div></div></div>`;
+  }).join("");
+  document.getElementById("lt-legend").innerHTML = ETAPAS.map(([n, c]) => `<span><i style="background:${c}"></i>${n}</span>`).join("")
+    + `<span><i style="background:var(--accent-2);width:3px;border-radius:0"></i>Prazo</span>`;
+
+  // Próximos dias de placas
+  const PROX = [["Amanhã",38],["Depois de amanhã",52]];
+  document.getElementById("next-days").innerHTML = PROX.map(([d, n]) =>
+    `<div class="hrow"><div class="name">${d}<span>${n} placas</span></div><div class="htrack"><div style="width:${n / 60 * 100}%;background:var(--s2)"></div></div></div>`).join("");
+
+  // Re-runs por motivo
+  const RR = [["Equipamento",14],["Preparo da amostra",9],["Controle fora do esperado",6],["Registro",4],["Outros",2]];
+  document.getElementById("reruns").innerHTML = RR.map(([m, n], i) =>
+    `<div class="hrow"><div class="name">${m}<span>${n}</span></div><div class="htrack"><div style="width:${n / 14 * 100}%;background:${i === 0 ? "var(--accent-2)" : "var(--s2)"}"></div></div></div>`).join("");
+
+  // ---------- Abas do Timeliness ----------
+  document.querySelectorAll(".tabs button").forEach((b) => b.addEventListener("click", () => {
+    const tabs = b.closest(".tabs");
+    tabs.querySelectorAll("button").forEach((x) => x.setAttribute("aria-selected", String(x === b)));
+    const body = tabs.closest(".screen");
+    body.querySelectorAll(".tabpanel").forEach((p) => { p.hidden = p.id !== b.dataset.tab; });
+  }));
+
+  // ---------- Navegação entre slides ----------
+  const deck = document.getElementById("deck");
+  const slides = [...document.querySelectorAll(".slide")];
+  const dots = document.querySelector(".dots");
+  document.getElementById("tot").textContent = slides.length;
+  slides.forEach((s, i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.setAttribute("aria-label", `Slide ${i + 1}`);
+    b.addEventListener("click", () => ir(i));
+    dots.appendChild(b);
+  });
+  let atual = 0;
+  function ir(i) { slides[Math.max(0, Math.min(slides.length - 1, i))].scrollIntoView({ behavior: "smooth" }); }
+  function marcar(i) {
+    atual = i;
+    document.getElementById("cur").textContent = i + 1;
+    [...dots.children].forEach((d, j) => d.setAttribute("aria-current", String(j === i)));
+    document.getElementById("prev").disabled = i === 0;
+    document.getElementById("next").disabled = i === slides.length - 1;
+  }
+  // O slide "atual" é o que cruza a linha do meio da tela (funciona também com slides mais altos que a tela)
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) marcar(slides.indexOf(e.target)); });
+  }, { root: deck, rootMargin: "-50% 0px -50% 0px", threshold: 0 });
+  slides.forEach((s) => io.observe(s));
+  marcar(0);
+  document.getElementById("prev").addEventListener("click", () => ir(atual - 1));
+  document.getElementById("next").addEventListener("click", () => ir(atual + 1));
+  document.addEventListener("keydown", (e) => {
+    if (e.target.closest("input, textarea, [contenteditable]")) return;
+    const k = e.key;
+    if (["ArrowDown", "ArrowRight", "PageDown", " "].includes(k)) { e.preventDefault(); ir(atual + 1); }
+    else if (["ArrowUp", "ArrowLeft", "PageUp"].includes(k)) { e.preventDefault(); ir(atual - 1); }
+    else if (k === "Home") { e.preventDefault(); ir(0); }
+    else if (k === "End") { e.preventDefault(); ir(slides.length - 1); }
+  });
+</script>
+<script src="assets/i18n-novo-nordisk-en.js"></script>
+<script src="assets/idioma.js"></script>
+</body>
+</html>

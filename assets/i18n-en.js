@@ -134,6 +134,7 @@ window.I18N_EN = {
  "Local": "Location",
  "Ver currículo": "View resume",
  "40 min/dia": "40 min/day",
+ "Ver o estudo de caso completo, com as telas recriadas →": "See the full case study, with recreated screens →",
  "Montes Claros – MG · remoto ou presencial": "Montes Claros – MG, Brazil · remote or on-site",
  "Igor Mendes · Analista de Dados": "Igor Mendes · Data Analyst",
  "Foto de Igor Mendes": "Photo of Igor Mendes",
